@@ -131,3 +131,4 @@ C:\Users\Laptop\SistemaFacturacion\obj\Debug\net10.0\refint\SistemaFacturacion.d
 C:\Users\Laptop\SistemaFacturacion\obj\Debug\net10.0\SistemaFacturacion.pdb
 C:\Users\Laptop\SistemaFacturacion\obj\Debug\net10.0\SistemaFacturacion.genruntimeconfig.cache
 C:\Users\Laptop\SistemaFacturacion\obj\Debug\net10.0\ref\SistemaFacturacion.dll
+C:\Users\Laptop\SistemaFacturacion\obj\Debug\net10.0\SistemaFacturacion.sourcelink.json
