@@ -6,6 +6,8 @@ using SistemaFacturacion.DTOs.Unidades;
 using SistemaFacturacion.Models;
 using SistemaFacturacion.Services;
 
+using SistemaFacturacion.Security;
+
 namespace SistemaFacturacion.Controllers;
 
 [ApiController]
@@ -23,6 +25,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = Permissions.PropiedadesVer)]
     public async Task<IActionResult> GetAll([FromQuery] int? idPropiedad, [FromQuery] string? estado)
     {
         var query = _context.Unidades
@@ -53,6 +56,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = Permissions.PropiedadesVer)]
     public async Task<IActionResult> GetById(int id)
     {
         var unidad = await _context.Unidades
@@ -76,6 +80,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = Permissions.PropiedadesGestionar)]
     public async Task<IActionResult> Create([FromBody] CreateUnidadRequest request)
     {
         var propiedad = await _context.Propiedades.FindAsync(request.IdPropiedad);
@@ -114,6 +119,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = Permissions.PropiedadesGestionar)]
     public async Task<IActionResult> Update(int id, [FromBody] CreateUnidadRequest request)
     {
         var unidad = await _context.Unidades.FindAsync(id);
@@ -135,6 +141,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpPatch("{id}/estado")]
+    [Authorize(Policy = Permissions.PropiedadesGestionar)]
     public async Task<IActionResult> CambiarEstado(int id, [FromBody] string nuevoEstado)
     {
         var unidad = await _context.Unidades.FindAsync(id);
@@ -148,6 +155,7 @@ public class UnidadesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = Permissions.PropiedadesGestionar)]
     public async Task<IActionResult> Deactivate(int id)
     {
         var unidad = await _context.Unidades.FindAsync(id);

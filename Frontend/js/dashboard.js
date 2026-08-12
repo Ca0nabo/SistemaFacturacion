@@ -1,139 +1,167 @@
+let dashboardPeriodoActual = currentPeriod();
+
 function initDashboard() {
     onView('dashboard', loadDashboard);
+
+    document.querySelectorAll('[data-dashboard-target]').forEach(card => {
+        card.addEventListener('click', () => abrirDetalleDashboard(card.dataset.dashboardTarget));
+    });
 }
 
 async function loadDashboard() {
-    const dateEl = document.getElementById('dashboard-date');
-    dateEl.textContent = new Date().toLocaleDateString('es-ES', {
-        year: 'numeric', month: 'long', day: 'numeric'
+    const fecha = document.getElementById('dashboard-date');
+    fecha.textContent = new Date().toLocaleDateString('es-DO', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
+
+    const subtitle = document.getElementById('dashboard-period-label');
+    if (subtitle) subtitle.textContent = 'Cargando información del mes...';
 
     try {
-        const [facturas, movimientos, metricas] = await Promise.all([
-            apiGet('/facturacion'),
-            apiGet('/movimientos'),
-            apiGet('/dashboard/metricas').catch(() => null)
-        ]);
+        const metricas = await apiGet('/dashboard/metricas');
+        dashboardPeriodoActual = metricas.periodoActual || currentPeriod();
 
-        const facturasArr = facturas || [];
-        const movimientosArr = movimientos || [];
+        document.getElementById('metric-ingresos').textContent = dinero(metricas.facturadoMes);
+        document.getElementById('metric-cobrado').textContent = dinero(metricas.cobradoMes);
+        document.getElementById('metric-gastos').textContent = dinero(metricas.gastosMes);
+        document.getElementById('metric-cxc').textContent = dinero(metricas.totalCxC);
+        document.getElementById('metric-cxp').textContent = dinero(metricas.totalCxP);
+        document.getElementById('metric-ocupacion').textContent = `${metricas.tasaOcupacion || 0}%`;
+        document.getElementById('metric-contratos').textContent = metricas.contratosActivos || 0;
+        document.getElementById('metric-contratos-vencer').textContent = metricas.contratosPorVencer || 0;
+        document.getElementById('metric-margen').textContent = dinero(metricas.margenGanancia);
 
-        calcularMetricas(facturasArr, movimientosArr, metricas);
-        renderUltimasFacturas(facturasArr);
-        renderChart(facturasArr);
-    } catch (err) {
-        console.error('Error cargando dashboard:', err);
-    }
-}
+        if (subtitle) {
+            subtitle.textContent = `Resultados de ${formatearPeriodoDashboard(dashboardPeriodoActual)} · ${metricas.facturasEmitidas || 0} factura(s) del período`;
+        }
 
-function calcularMetricas(facturas, movimientos, metricas) {
-    const now = new Date();
-    const mesActual = now.getMonth();
-    const anioActual = now.getFullYear();
-
-    const facturasMes = (facturas || []).filter(f => {
-        const d = new Date(f.fechaEmision);
-        if (isNaN(d.getTime())) return false;
-        return d.getMonth() === mesActual && d.getFullYear() === anioActual;
-    });
-
-    const ingresos = facturasMes
-        .filter(f => f.estado === 'EMITIDA')
-        .reduce((sum, f) => sum + (f.total ?? 0), 0);
-
-    const gastos = (movimientos || [])
-        .filter(m => m.tipo === 'CxP' && m.montoPendiente > 0)
-        .reduce((sum, m) => sum + (m.montoPendiente ?? 0), 0);
-
-    const cxc = (movimientos || [])
-        .filter(m => m.tipo === 'CxC' && m.montoPendiente > 0)
-        .reduce((sum, m) => sum + (m.montoPendiente ?? 0), 0);
-
-    const cxp = (movimientos || [])
-        .filter(m => m.tipo === 'CxP' && m.montoPendiente > 0)
-        .reduce((sum, m) => sum + (m.montoPendiente ?? 0), 0);
-
-    document.getElementById('metric-ingresos').textContent = `RD$${formatearMonto(ingresos)}`;
-    document.getElementById('metric-gastos').textContent = `RD$${formatearMonto(gastos)}`;
-    document.getElementById('metric-cxc').textContent = `RD$${formatearMonto(cxc)}`;
-    document.getElementById('metric-cxp').textContent = `RD$${formatearMonto(cxp)}`;
-
-    if (metricas && metricas.margenGanancia !== undefined) {
-        document.getElementById('metric-margen').textContent = `RD$${formatearMonto(metricas.margenGanancia)}`;
-    } else {
-        const margen = ingresos > 0 ? ((ingresos - gastos) / ingresos) * 100 : 0;
-        document.getElementById('metric-margen').textContent = `${formatearMonto(margen)}%`;
-    }
-
-    if (metricas) {
-        document.getElementById('metric-ocupacion').textContent = `${metricas.tasaOcupacion ?? 0}%`;
-        document.getElementById('metric-contratos').textContent = metricas.contratosActivos ?? 0;
-        document.getElementById('metric-contratos-vencer').textContent = metricas.contratosPorVencer ?? 0;
+        renderUltimasFacturas(metricas.ultimasFacturas || []);
+        renderChart(metricas.tendenciaMensual || []);
+    } catch (error) {
+        console.error('Dashboard:', error);
+        if (subtitle) subtitle.textContent = 'No fue posible cargar el resumen.';
+        document.getElementById('dashboard-facturas-body').innerHTML =
+            `<tr><td colspan="6" class="table-error">${escapeHtml(error.message)}</td></tr>`;
     }
 }
 
 function renderUltimasFacturas(facturas) {
     const tbody = document.getElementById('dashboard-facturas-body');
-    const ultimas = (facturas || []).slice(0, 5);
+    const rows = (facturas || []).slice(0, 6);
 
-    tbody.innerHTML = ultimas.map(f => {
-        const estado = (f.estado || '').toLowerCase();
-        return `
-        <tr>
-            <td>${f.idFactura ?? ''}</td>
-            <td>${f.razonSocial ?? ''}</td>
-            <td>RD$${formatearMonto(f.total ?? 0)}</td>
-            <td><span class="status-badge status-${estado}">${f.estado}</span></td>
+    if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Aún no hay facturas.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = rows.map(f => {
+        const estadoVisual = f.esPeriodoFuturo ? 'FUTURA' : f.estado;
+        const tipo = String(f.tipoFactura || '').toUpperCase() === 'CREDITO' ? 'A crédito' : 'Al contado';
+        return `<tr class="dashboard-invoice-row${f.esPeriodoFuturo ? ' invoice-future-row' : ''}">
+            <td><strong>${escapeHtml(f.numeroECF)}</strong><br><span class="muted">${escapeHtml(formatearPeriodoDashboard(f.periodoFacturado) || 'Manual')}</span></td>
+            <td>${escapeHtml(f.razonSocial)}</td>
+            <td><span class="invoice-type-badge ${tipo === 'A crédito' ? 'invoice-type-credit' : 'invoice-type-cash'}">${tipo}</span></td>
+            <td class="dashboard-money-cell"><strong>${dinero(f.total)}</strong><br><span class="muted">Pend. ${dinero(f.montoPendiente)}</span></td>
+            <td><span class="status-badge ${statusClass(estadoVisual)}">${escapeHtml(estadoVisual)}</span></td>
+            <td><button class="btn btn-sm btn-secondary" type="button" onclick="verFactura(${f.idFactura})">Ver</button></td>
         </tr>`;
     }).join('');
 }
 
-function renderChart(facturas) {
+function renderChart(series) {
     const container = document.getElementById('chart-bars');
-    container.innerHTML = '';
+    const months = (series || []).map(item => ({
+        periodo: item.periodo,
+        label: etiquetaMesDashboard(item.periodo),
+        billed: Number(item.facturado || 0),
+        paid: Number(item.cobrado || 0)
+    }));
 
-    const meses = [];
-    const now = new Date();
-    for (let i = 5; i >= 0; i--) {
-        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-        meses.push({
-            label: d.toLocaleDateString('es-ES', { month: 'short' }),
-            mes: d.getMonth(),
-            anio: d.getFullYear(),
-            ingresos: 0,
-            gastos: 0
-        });
+    if (!months.length) {
+        container.innerHTML = '<div class="empty-state chart-empty">No hay datos para graficar.</div>';
+        return;
     }
 
-    (facturas || []).forEach(f => {
-        const d = new Date(f.fechaEmision);
-        if (isNaN(d.getTime())) return;
-        const m = meses.find(m => m.mes === d.getMonth() && m.anio === d.getFullYear());
-        if (m) {
-            if (f.estado === 'EMITIDA') m.ingresos += f.total ?? 0;
-            if (f.estado === 'PAGADA') m.gastos += f.total ?? 0;
+    const max = Math.max(1, ...months.flatMap(m => [m.billed, m.paid]));
+    const alturaMaxima = 170;
+
+    container.innerHTML = months.map(m => {
+        const billedHeight = m.billed <= 0 ? 0 : Math.max(5, (m.billed / max) * alturaMaxima);
+        const paidHeight = m.paid <= 0 ? 0 : Math.max(5, (m.paid / max) * alturaMaxima);
+        return `<div class="chart-bar-group">
+            <div class="chart-pair">
+                <div class="chart-bar ingresos" style="height:${billedHeight}px" title="Facturado: ${dinero(m.billed)}" aria-label="${m.label}, facturado ${dinero(m.billed)}"></div>
+                <div class="chart-bar cobrado" style="height:${paidHeight}px" title="Cobrado: ${dinero(m.paid)}" aria-label="${m.label}, cobrado ${dinero(m.paid)}"></div>
+            </div>
+            <span class="chart-label">${escapeHtml(m.label)}</span>
+        </div>`;
+    }).join('');
+}
+
+function abrirDetalleDashboard(target) {
+    switch (target) {
+        case 'facturas-current': {
+            const periodo = document.getElementById('facturas-filter-periodo');
+            const estado = document.getElementById('facturas-filter-estado');
+            if (periodo) periodo.value = dashboardPeriodoActual;
+            if (estado) estado.value = '';
+            navigateTo('facturas');
+            break;
         }
-    });
+        case 'cobros-current':
+        case 'cxc': {
+            prepararFechasMovimientos(target === 'cobros-current');
+            navigateTo('movimientos');
+            break;
+        }
+        case 'gastos':
+        case 'cxp':
+            navigateTo('gastos');
+            break;
+        case 'ocupacion': {
+            const estadoPropiedad = document.getElementById('filter-estado-propiedad');
+            if (estadoPropiedad) estadoPropiedad.value = 'Alquilada';
+            navigateTo('propiedades');
+            break;
+        }
+        case 'contratos':
+        case 'contratos-vencer':
+            navigateTo('contratos');
+            break;
+        default:
+            break;
+    }
+}
 
-    const maxValor = Math.max(...meses.map(m => Math.max(m.ingresos, m.gastos)), 1);
+function prepararFechasMovimientos(limitarAlMes) {
+    const desde = document.getElementById('mov-filter-desde');
+    const hasta = document.getElementById('mov-filter-hasta');
+    if (!desde || !hasta) return;
 
-    meses.forEach(m => {
-        const group = document.createElement('div');
-        group.className = 'chart-bar-group';
+    if (!limitarAlMes) {
+        desde.value = '';
+        hasta.value = '';
+        return;
+    }
 
-        const altIng = (m.ingresos / maxValor) * 180;
-        const altGast = (m.gastos / maxValor) * 180;
+    const [year, month] = dashboardPeriodoActual.split('-').map(Number);
+    const ultimoDia = new Date(year, month, 0).getDate();
+    desde.value = `${year}-${String(month).padStart(2, '0')}-01`;
+    hasta.value = `${year}-${String(month).padStart(2, '0')}-${String(ultimoDia).padStart(2, '0')}`;
+}
 
-        group.innerHTML = `
-            <div class="chart-bar ingresos" style="height:${Math.max(altIng, 4)}px" title="Ingresos: RD$${formatearMonto(m.ingresos)}"></div>
-            <div class="chart-bar gastos" style="height:${Math.max(altGast, 4)}px" title="Gastos: RD$${formatearMonto(m.gastos)}"></div>
-            <span class="chart-label">${m.label}</span>
-        `;
-        container.appendChild(group);
+function formatearPeriodoDashboard(periodo) {
+    if (!periodo || !/^\d{4}-\d{2}$/.test(periodo)) return periodo || '';
+    const [year, month] = periodo.split('-').map(Number);
+    return new Date(year, month - 1, 1).toLocaleDateString('es-DO', {
+        month: 'long', year: 'numeric'
     });
 }
 
-function formatearMonto(valor) {
-    if (typeof valor !== 'number' || isNaN(valor)) valor = 0;
-    return valor.toLocaleString('es-DO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function etiquetaMesDashboard(periodo) {
+    if (!periodo || !/^\d{4}-\d{2}$/.test(periodo)) return periodo || '';
+    const [year, month] = periodo.split('-').map(Number);
+    return new Date(year, month - 1, 1)
+        .toLocaleDateString('es-DO', { month: 'short' })
+        .replace('.', '');
 }

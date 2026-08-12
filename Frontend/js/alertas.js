@@ -1,5 +1,6 @@
 function initAlertas() {
     const btn = document.getElementById('btn-alertas');
+    if (!btn) return;
     const dropdown = document.getElementById('alertas-dropdown');
 
     btn.addEventListener('click', (e) => {
@@ -18,8 +19,10 @@ function initAlertas() {
         e.stopPropagation();
     });
 
-    cargarContadorAlertas();
-    alertasInterval = setInterval(cargarContadorAlertas, 60000);
+    if (hasPermission('ALERTAS.VER')) {
+        cargarContadorAlertas();
+        alertasInterval = setInterval(cargarContadorAlertas, 60000);
+    }
 }
 
 async function cargarAlertas() {

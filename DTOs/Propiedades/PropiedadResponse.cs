@@ -1,10 +1,12 @@
 namespace SistemaFacturacion.DTOs.Propiedades;
+
 public class PropiedadResponse
 {
     public int IdPropiedad { get; set; }
     public int IdEntidad { get; set; }
     public string RazonSocialPropietario { get; set; } = null!;
     public string RncCedulaPropietario { get; set; } = null!;
+    public string Codigo { get; set; } = null!;
     public string TipoPropiedad { get; set; } = null!;
     public string Direccion { get; set; } = null!;
     public string? Sector { get; set; }
@@ -13,6 +15,8 @@ public class PropiedadResponse
     public int? CantidadHabitaciones { get; set; }
     public int? CantidadBanos { get; set; }
     public bool TieneParqueo { get; set; }
+    public decimal CanonMensualSugerido { get; set; }
+    public decimal MantenimientoMensualSugerido { get; set; }
     public string Estado { get; set; } = null!;
     public bool Activo { get; set; }
     public int CantidadUnidades { get; set; }

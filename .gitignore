@@ -1,0 +1,26 @@
+# Compilacion .NET
+bin/
+obj/
+
+# Publicacion
+publish/
+*.zip
+
+# Archivos generados/subidos
+Uploads/
+
+# Configuracion privada
+appsettings.json
+appsettings.Development.json
+appsettings.pre-final-backup.json
+
+# Mantener plantilla publica
+!appsettings.example.json
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log

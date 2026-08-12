@@ -33,12 +33,9 @@ async function loadUsuarios() {
                 <td><span class="rol-badge">${u.rol}</span></td>
                 <td><span class="status-badge status-${est}">${u.activo ? 'Activo' : 'Inactivo'}</span></td>
                 <td>${new Date(u.fechaCreacion).toLocaleDateString('es-DO')}</td>
-                <td class="acciones">
+                <td class="acciones">${hasPermission('USUARIOS.GESTIONAR') ? `
                     <button class="btn btn-sm btn-secondary" onclick="editarUsuario(${u.idUsuario})">Editar</button>
-                    <button class="btn btn-sm ${u.activo ? 'btn-danger' : 'btn-primary'}" onclick="toggleUsuario(${u.idUsuario})">
-                        ${u.activo ? 'Desactivar' : 'Activar'}
-                    </button>
-                </td>
+                    <button class="btn btn-sm ${u.activo ? 'btn-danger' : 'btn-primary'}" onclick="toggleUsuario(${u.idUsuario})">${u.activo ? 'Desactivar' : 'Activar'}</button>` : '<span class="muted">Solo lectura</span>'}</td>
             </tr>`;
         }).join('');
     } catch (err) {
@@ -88,7 +85,7 @@ function initUsuarioForm() {
         const payload = {
             nombreCompleto: document.getElementById('usuario-nombre').value.trim(),
             email: document.getElementById('usuario-email').value.trim(),
-            password: document.getElementById('usuario-password').value,
+            password: document.getElementById('usuario-password').value || null,
             idRol: parseInt(document.getElementById('usuario-rol').value)
         };
 
@@ -101,7 +98,9 @@ function initUsuarioForm() {
         }
 
         try {
-            await apiPost('/users', payload);
+            if (usuarioEditandoId) await apiPut(`/users/${usuarioEditandoId}`, payload);
+            else await apiPost('/users', payload);
+            usuarioEditandoId = null;
             navigateTo('usuarios');
         } catch (err) {
             errorDiv.textContent = err.message;

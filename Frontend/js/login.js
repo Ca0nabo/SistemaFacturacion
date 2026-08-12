@@ -21,11 +21,12 @@ function initLogin() {
                 id: data.idUsuario,
                 email: data.email,
                 nombre: data.nombreCompleto,
-                rol: data.rol
+                rol: data.rol,
+                permisos: data.permisos || []
             });
 
             showApp();
-            navigateTo('dashboard');
+            navigateTo(getDefaultView());
         } catch (err) {
             errorDiv.textContent = err.message;
             errorDiv.classList.remove('hidden');

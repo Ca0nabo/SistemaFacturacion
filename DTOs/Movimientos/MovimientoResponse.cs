@@ -1,8 +1,14 @@
 namespace SistemaFacturacion.DTOs.Movimientos;
+
 public class MovimientoResponse
 {
     public int IdMovimiento { get; set; }
     public int IdFactura { get; set; }
+    public string NumeroFactura { get; set; } = null!;
+    public int IdEntidad { get; set; }
+    public string Entidad { get; set; } = null!;
+    public int? IdContrato { get; set; }
+    public string? CodigoContrato { get; set; }
     public int? IdPropiedad { get; set; }
     public int? IdUnidad { get; set; }
     public string? DireccionPropiedad { get; set; }

@@ -2,11 +2,16 @@ let currentView = null;
 const viewCallbacks = {};
 
 function navigateTo(viewName) {
+    if (viewName !== 'access-denied' && !canAccessView(viewName)) {
+        showAccessDenied(viewName);
+        return;
+    }
     if (currentView === viewName) return;
 
     document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
     const target = document.getElementById(`view-${viewName}`);
-    if (target) target.classList.remove('hidden');
+    if (!target) return;
+    target.classList.remove('hidden');
 
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     const navItem = document.querySelector(`.nav-item[data-view="${viewName}"]`);
@@ -15,12 +20,11 @@ function navigateTo(viewName) {
     currentView = viewName;
 
     const titleEl = document.getElementById('view-title');
-    if (titleEl && window.viewTitles && window.viewTitles[viewName]) {
-        titleEl.textContent = window.viewTitles[viewName];
-    }
+    if (titleEl && window.viewTitles?.[viewName]) titleEl.textContent = window.viewTitles[viewName];
 
+    applyPermissionVisibility(target);
     if (viewCallbacks[viewName]) {
-        Promise.resolve(viewCallbacks[viewName]()).catch(err => console.error('Error en vista', viewName, err));
+        Promise.resolve(viewCallbacks[viewName]()).then(() => applyPermissionVisibility(target)).catch(err => console.error('Error en vista', viewName, err));
     }
 }
 

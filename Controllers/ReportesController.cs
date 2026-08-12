@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SistemaFacturacion.Data;
 using SistemaFacturacion.DTOs.Reportes;
 
+using SistemaFacturacion.Security;
+
 namespace SistemaFacturacion.Controllers;
 
 [ApiController]
@@ -19,12 +21,13 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("ingresos-mensuales")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetIngresosMensuales([FromQuery] int? anio)
     {
         anio ??= DateTime.UtcNow.Year;
 
         var facturas = await _context.FacturasCabecera
-            .Where(f => f.FechaEmision.Year == anio && f.Estado == "EMITIDA")
+            .Where(f => f.FechaEmision.Year == anio && f.Estado != "ANULADA")
             .ToListAsync();
 
         var reporte = facturas
@@ -44,13 +47,14 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("facturacion-por-cliente")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetFacturacionPorCliente([FromQuery] int? anio)
     {
         anio ??= DateTime.UtcNow.Year;
 
         var query = _context.FacturasCabecera
             .Include(f => f.Entidad)
-            .Where(f => f.FechaEmision.Year == anio && f.Estado == "EMITIDA");
+            .Where(f => f.FechaEmision.Year == anio && f.Estado != "ANULADA");
 
         var reporte = await query
             .GroupBy(f => new { f.IdEntidad, f.Entidad.RazonSocial, f.Entidad.RncCedula })
@@ -69,27 +73,26 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("estado-cuentas")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetEstadoCuentas()
     {
         var hoy = DateOnly.FromDateTime(DateTime.UtcNow);
 
         var totalPendiente = await _context.MovimientosCx
-            .Where(m => m.MontoPendiente > 0 && m.FechaVencimiento >= hoy)
+            .Where(m => m.Tipo == "CxC" && m.MontoPendiente > 0 && m.FechaVencimiento >= hoy)
             .SumAsync(m => m.MontoPendiente);
 
         var totalVencido = await _context.MovimientosCx
-            .Where(m => m.MontoPendiente > 0 && m.FechaVencimiento < hoy)
+            .Where(m => m.Tipo == "CxC" && m.MontoPendiente > 0 && m.FechaVencimiento < hoy)
             .SumAsync(m => m.MontoPendiente);
 
-        var totalPagado = await _context.MovimientosCx
-            .Where(m => m.MontoPendiente == 0)
-            .SumAsync(m => m.MontoOriginal);
+        var totalPagado = await _context.Pagos.SumAsync(p => p.Monto);
 
         var cantidadPendiente = await _context.MovimientosCx
-            .CountAsync(m => m.MontoPendiente > 0 && m.FechaVencimiento >= hoy);
+            .CountAsync(m => m.Tipo == "CxC" && m.MontoPendiente > 0 && m.FechaVencimiento >= hoy);
 
         var cantidadVencido = await _context.MovimientosCx
-            .CountAsync(m => m.MontoPendiente > 0 && m.FechaVencimiento < hoy);
+            .CountAsync(m => m.Tipo == "CxC" && m.MontoPendiente > 0 && m.FechaVencimiento < hoy);
 
         return Ok(new ReporteCxCResponse
         {
@@ -102,13 +105,14 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("ingresos-por-propiedad")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetIngresosPorPropiedad([FromQuery] int? anio)
     {
         anio ??= DateTime.UtcNow.Year;
 
         var query = _context.FacturasCabecera
             .Include(f => f.Propiedad)
-            .Where(f => f.FechaEmision.Year == anio && f.Estado == "EMITIDA" && f.IdPropiedad != null);
+            .Where(f => f.FechaEmision.Year == anio && f.Estado != "ANULADA" && f.IdPropiedad != null);
 
         var reporte = await query
             .GroupBy(f => new { f.IdPropiedad, Direccion = f.Propiedad!.Direccion })
@@ -126,6 +130,7 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("morosidad")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetMorosidad()
     {
         var hoy = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -154,6 +159,7 @@ public class ReportesController : ControllerBase
     }
 
     [HttpGet("ocupacion")]
+    [Authorize(Policy = Permissions.ReportesVer)]
     public async Task<IActionResult> GetOcupacion()
     {
         var total = await _context.Propiedades.CountAsync(p => p.Activo);

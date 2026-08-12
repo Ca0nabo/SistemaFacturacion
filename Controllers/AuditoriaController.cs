@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SistemaFacturacion.Data;
 using SistemaFacturacion.DTOs.Auditoria;
 
+using SistemaFacturacion.Security;
+
 namespace SistemaFacturacion.Controllers;
 
 [ApiController]
@@ -19,6 +21,7 @@ public class AuditoriaController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = Permissions.AuditoriaVer)]
     public async Task<IActionResult> GetAll([FromQuery] int pagina = 1, [FromQuery] int tamano = 50)
     {
         var query = _context.AuditoriaLogs
@@ -48,6 +51,7 @@ public class AuditoriaController : ControllerBase
     }
 
     [HttpGet("modulo/{modulo}")]
+    [Authorize(Policy = Permissions.AuditoriaVer)]
     public async Task<IActionResult> GetByModulo(string modulo, [FromQuery] int pagina = 1, [FromQuery] int tamano = 50)
     {
         var query = _context.AuditoriaLogs

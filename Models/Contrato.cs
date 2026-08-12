@@ -1,4 +1,5 @@
 namespace SistemaFacturacion.Models;
+
 public class Contrato
 {
     public int IdContrato { get; set; }
@@ -13,8 +14,14 @@ public class Contrato
     public decimal? MontoMantenimiento { get; set; }
     public decimal? Deposito { get; set; }
     public int DiaPago { get; set; } = 5;
-    public string Estado { get; set; } = null!;
+    public bool AplicaITBIS { get; set; }
+    public string Estado { get; set; } = "Pendiente";
+
     public Entidad Entidad { get; set; } = null!;
     public Propiedad? Propiedad { get; set; }
     public Unidad? Unidad { get; set; }
+    public ICollection<FacturaCabecera> Facturas { get; set; } = new List<FacturaCabecera>();
+    public ICollection<Pago> Pagos { get; set; } = new List<Pago>();
+    public ICollection<DepositoGarantia> Depositos { get; set; } = new List<DepositoGarantia>();
+    public ICollection<AcuerdoPago> AcuerdosPago { get; set; } = new List<AcuerdoPago>();
 }

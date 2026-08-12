@@ -1,0 +1,13 @@
+bin/
+obj/
+.vs/
+.git/
+.gitignore
+Migrations_Respaldo/
+Uploads/*
+!Uploads/.gitkeep
+appsettings.json
+appsettings.Development.json
+*.user
+*.suo
+*.log

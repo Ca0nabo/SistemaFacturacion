@@ -22,6 +22,71 @@ namespace SistemaFacturacion.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("SistemaFacturacion.Models.AcuerdoPago", b =>
+                {
+                    b.Property<int>("IdAcuerdo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdAcuerdo"));
+
+                    b.Property<int>("CantidadCuotas")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DiaPago")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<DateOnly>("FechaInicio")
+                        .HasColumnType("date");
+
+                    b.Property<int>("IdContrato")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdEntidad")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdFacturaOrigen")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdPropiedad")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("MontoAcordado")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoCuota")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoOriginal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.HasKey("IdAcuerdo");
+
+                    b.HasIndex("IdContrato");
+
+                    b.HasIndex("IdEntidad");
+
+                    b.HasIndex("IdFacturaOrigen");
+
+                    b.HasIndex("IdPropiedad");
+
+                    b.ToTable("AcuerdosPago");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.AsientoContable", b =>
                 {
                     b.Property<int>("IdAsiento")
@@ -142,7 +207,7 @@ namespace SistemaFacturacion.Migrations
                         new
                         {
                             IdCuentaContable = 5,
-                            NombreCuenta = "Ingresos por Ventas"
+                            NombreCuenta = "Ingresos por Alquiler"
                         },
                         new
                         {
@@ -158,6 +223,9 @@ namespace SistemaFacturacion.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdContrato"));
+
+                    b.Property<bool>("AplicaITBIS")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Condiciones")
                         .IsRequired()
@@ -205,11 +273,97 @@ namespace SistemaFacturacion.Migrations
 
                     b.HasIndex("IdEntidad");
 
-                    b.HasIndex("IdPropiedad");
-
                     b.HasIndex("IdUnidad");
 
+                    b.HasIndex("IdPropiedad", "IdUnidad", "Estado");
+
                     b.ToTable("Contratos");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.CuotaAcuerdoPago", b =>
+                {
+                    b.Property<int>("IdCuotaAcuerdo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdCuotaAcuerdo"));
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateOnly>("FechaVencimiento")
+                        .HasColumnType("date");
+
+                    b.Property<int>("IdAcuerdo")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoPagado")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("NumeroCuota")
+                        .HasColumnType("integer");
+
+                    b.HasKey("IdCuotaAcuerdo");
+
+                    b.HasIndex("IdAcuerdo", "NumeroCuota")
+                        .IsUnique();
+
+                    b.ToTable("CuotasAcuerdoPago");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.DepositoGarantia", b =>
+                {
+                    b.Property<int>("IdDeposito")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdDeposito"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateOnly?>("FechaDevolucion")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("FechaRecepcion")
+                        .HasColumnType("date");
+
+                    b.Property<int>("IdContrato")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MetodoPago")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<decimal>("MontoRecibido")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MontoRequerido")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Referencia")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("IdDeposito");
+
+                    b.HasIndex("IdContrato");
+
+                    b.ToTable("DepositosGarantia");
                 });
 
             modelBuilder.Entity("SistemaFacturacion.Models.Entidad", b =>
@@ -254,6 +408,9 @@ namespace SistemaFacturacion.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdFactura"));
 
+                    b.Property<bool>("AplicaITBIS")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -264,9 +421,15 @@ namespace SistemaFacturacion.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("NOW()");
 
+                    b.Property<DateOnly?>("FechaVencimiento")
+                        .HasColumnType("date");
+
                     b.Property<string>("FirmaDGII")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<int?>("IdContrato")
+                        .HasColumnType("integer");
 
                     b.Property<int>("IdEntidad")
                         .HasColumnType("integer");
@@ -285,8 +448,22 @@ namespace SistemaFacturacion.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("OrigenFactura")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("PeriodoFacturado")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
                     b.Property<decimal>("Subtotal")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TipoFactura")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -301,6 +478,8 @@ namespace SistemaFacturacion.Migrations
 
                     b.HasIndex("NumeroECF")
                         .IsUnique();
+
+                    b.HasIndex("IdContrato", "PeriodoFacturado", "OrigenFactura");
 
                     b.ToTable("FacturasCabecera");
                 });
@@ -332,6 +511,74 @@ namespace SistemaFacturacion.Migrations
                     b.HasIndex("IdFactura");
 
                     b.ToTable("FacturasDetalle");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.MovimientoCuenta", b =>
+                {
+                    b.Property<int>("IdMovimientoCuenta")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdMovimientoCuenta"));
+
+                    b.Property<string>("Concepto")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<decimal>("Credito")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Debito")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<int?>("IdContrato")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdEntidad")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdFactura")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdPago")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdPropiedad")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdUnidad")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Referencia")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("TipoMovimiento")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("IdMovimientoCuenta");
+
+                    b.HasIndex("IdContrato");
+
+                    b.HasIndex("IdFactura");
+
+                    b.HasIndex("IdPago");
+
+                    b.HasIndex("IdPropiedad");
+
+                    b.HasIndex("IdUnidad");
+
+                    b.HasIndex("IdEntidad", "IdPropiedad", "Fecha");
+
+                    b.ToTable("MovimientosCuenta");
                 });
 
             modelBuilder.Entity("SistemaFacturacion.Models.MovimientosCx", b =>
@@ -390,6 +637,65 @@ namespace SistemaFacturacion.Migrations
                     b.ToTable("MovimientosCx");
                 });
 
+            modelBuilder.Entity("SistemaFacturacion.Models.Pago", b =>
+                {
+                    b.Property<int>("IdPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdPago"));
+
+                    b.Property<DateTime>("FechaPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<int?>("IdContrato")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdEntidad")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdFactura")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdPropiedad")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("IdUnidad")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MetodoPago")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<decimal>("Monto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notas")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Referencia")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("IdPago");
+
+                    b.HasIndex("IdContrato");
+
+                    b.HasIndex("IdEntidad");
+
+                    b.HasIndex("IdFactura");
+
+                    b.HasIndex("IdPropiedad");
+
+                    b.HasIndex("IdUnidad");
+
+                    b.ToTable("Pagos");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.ParametrosEmpresa", b =>
                 {
                     b.Property<int>("IdParametro")
@@ -424,10 +730,10 @@ namespace SistemaFacturacion.Migrations
                         new
                         {
                             IdParametro = 1,
-                            NombreEmpresa = "Mi Empresa SRL",
+                            NombreEmpresa = "HabitaCont SRL",
                             PorcentajeITBIS = 0.18m,
                             SecuenciaEmpresa = "001",
-                            SecuenciaFiscalECF = "ECF001"
+                            SecuenciaFiscalECF = "FAC"
                         });
                 });
 
@@ -442,6 +748,9 @@ namespace SistemaFacturacion.Migrations
                     b.Property<bool>("Activo")
                         .HasColumnType("boolean");
 
+                    b.Property<decimal>("CanonMensualSugerido")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int?>("CantidadBanos")
                         .HasColumnType("integer");
 
@@ -451,6 +760,11 @@ namespace SistemaFacturacion.Migrations
                     b.Property<string>("Ciudad")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -464,6 +778,9 @@ namespace SistemaFacturacion.Migrations
 
                     b.Property<int>("IdEntidad")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("MantenimientoMensualSugerido")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MetrosCuadrados")
                         .HasColumnType("decimal(10,2)");
@@ -481,6 +798,9 @@ namespace SistemaFacturacion.Migrations
                         .HasColumnType("character varying(30)");
 
                     b.HasKey("IdPropiedad");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.HasIndex("IdEntidad");
 
@@ -522,19 +842,19 @@ namespace SistemaFacturacion.Migrations
                         {
                             IdRol = 2,
                             Nombre = "Contador",
-                            Permisos = "FACTURAS,REPORTES,MOVIMIENTOS"
+                            Permisos = "FACTURAS,REPORTES,MOVIMIENTOS,PAGOS,DEPOSITOS,ACUERDOS"
                         },
                         new
                         {
                             IdRol = 3,
                             Nombre = "Encargado de facturación",
-                            Permisos = "FACTURAS,ENTIDADES"
+                            Permisos = "FACTURAS,ENTIDADES,CONTRATOS"
                         },
                         new
                         {
                             IdRol = 4,
                             Nombre = "Gerente financiero",
-                            Permisos = "REPORTES,CONTRATOS,MOVIMIENTOS"
+                            Permisos = "REPORTES,CONTRATOS,MOVIMIENTOS,DEPOSITOS,ACUERDOS"
                         },
                         new
                         {
@@ -645,6 +965,40 @@ namespace SistemaFacturacion.Migrations
                         });
                 });
 
+            modelBuilder.Entity("SistemaFacturacion.Models.AcuerdoPago", b =>
+                {
+                    b.HasOne("SistemaFacturacion.Models.Contrato", "Contrato")
+                        .WithMany("AcuerdosPago")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SistemaFacturacion.Models.Entidad", "Entidad")
+                        .WithMany()
+                        .HasForeignKey("IdEntidad")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SistemaFacturacion.Models.FacturaCabecera", "FacturaOrigen")
+                        .WithMany()
+                        .HasForeignKey("IdFacturaOrigen")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Propiedad", "Propiedad")
+                        .WithMany()
+                        .HasForeignKey("IdPropiedad")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Contrato");
+
+                    b.Navigation("Entidad");
+
+                    b.Navigation("FacturaOrigen");
+
+                    b.Navigation("Propiedad");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.AsientoContable", b =>
                 {
                     b.HasOne("SistemaFacturacion.Models.CatalogoCuentas", "CuentaContable")
@@ -699,8 +1053,35 @@ namespace SistemaFacturacion.Migrations
                     b.Navigation("Unidad");
                 });
 
+            modelBuilder.Entity("SistemaFacturacion.Models.CuotaAcuerdoPago", b =>
+                {
+                    b.HasOne("SistemaFacturacion.Models.AcuerdoPago", "Acuerdo")
+                        .WithMany("Cuotas")
+                        .HasForeignKey("IdAcuerdo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Acuerdo");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.DepositoGarantia", b =>
+                {
+                    b.HasOne("SistemaFacturacion.Models.Contrato", "Contrato")
+                        .WithMany("Depositos")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contrato");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.FacturaCabecera", b =>
                 {
+                    b.HasOne("SistemaFacturacion.Models.Contrato", "Contrato")
+                        .WithMany("Facturas")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("SistemaFacturacion.Models.Entidad", "Entidad")
                         .WithMany("Facturas")
                         .HasForeignKey("IdEntidad")
@@ -716,6 +1097,8 @@ namespace SistemaFacturacion.Migrations
                         .WithMany("Facturas")
                         .HasForeignKey("IdUnidad")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Contrato");
 
                     b.Navigation("Entidad");
 
@@ -735,6 +1118,52 @@ namespace SistemaFacturacion.Migrations
                     b.Navigation("Factura");
                 });
 
+            modelBuilder.Entity("SistemaFacturacion.Models.MovimientoCuenta", b =>
+                {
+                    b.HasOne("SistemaFacturacion.Models.Contrato", "Contrato")
+                        .WithMany()
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Entidad", "Entidad")
+                        .WithMany()
+                        .HasForeignKey("IdEntidad")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SistemaFacturacion.Models.FacturaCabecera", "Factura")
+                        .WithMany()
+                        .HasForeignKey("IdFactura")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Pago", "Pago")
+                        .WithMany()
+                        .HasForeignKey("IdPago")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Propiedad", "Propiedad")
+                        .WithMany("MovimientosCuenta")
+                        .HasForeignKey("IdPropiedad")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Unidad", "Unidad")
+                        .WithMany()
+                        .HasForeignKey("IdUnidad")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Contrato");
+
+                    b.Navigation("Entidad");
+
+                    b.Navigation("Factura");
+
+                    b.Navigation("Pago");
+
+                    b.Navigation("Propiedad");
+
+                    b.Navigation("Unidad");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.MovimientosCx", b =>
                 {
                     b.HasOne("SistemaFacturacion.Models.FacturaCabecera", "Factura")
@@ -752,6 +1181,46 @@ namespace SistemaFacturacion.Migrations
                         .WithMany()
                         .HasForeignKey("IdUnidad")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Factura");
+
+                    b.Navigation("Propiedad");
+
+                    b.Navigation("Unidad");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.Pago", b =>
+                {
+                    b.HasOne("SistemaFacturacion.Models.Contrato", "Contrato")
+                        .WithMany("Pagos")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Entidad", "Entidad")
+                        .WithMany()
+                        .HasForeignKey("IdEntidad")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SistemaFacturacion.Models.FacturaCabecera", "Factura")
+                        .WithMany("Pagos")
+                        .HasForeignKey("IdFactura")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SistemaFacturacion.Models.Propiedad", "Propiedad")
+                        .WithMany()
+                        .HasForeignKey("IdPropiedad")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaFacturacion.Models.Unidad", "Unidad")
+                        .WithMany()
+                        .HasForeignKey("IdUnidad")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Contrato");
+
+                    b.Navigation("Entidad");
 
                     b.Navigation("Factura");
 
@@ -793,9 +1262,25 @@ namespace SistemaFacturacion.Migrations
                     b.Navigation("Rol");
                 });
 
+            modelBuilder.Entity("SistemaFacturacion.Models.AcuerdoPago", b =>
+                {
+                    b.Navigation("Cuotas");
+                });
+
             modelBuilder.Entity("SistemaFacturacion.Models.CatalogoCuentas", b =>
                 {
                     b.Navigation("Asientos");
+                });
+
+            modelBuilder.Entity("SistemaFacturacion.Models.Contrato", b =>
+                {
+                    b.Navigation("AcuerdosPago");
+
+                    b.Navigation("Depositos");
+
+                    b.Navigation("Facturas");
+
+                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("SistemaFacturacion.Models.Entidad", b =>
@@ -808,6 +1293,8 @@ namespace SistemaFacturacion.Migrations
                     b.Navigation("Detalles");
 
                     b.Navigation("Movimientos");
+
+                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("SistemaFacturacion.Models.Propiedad", b =>
@@ -815,6 +1302,8 @@ namespace SistemaFacturacion.Migrations
                     b.Navigation("Contratos");
 
                     b.Navigation("Facturas");
+
+                    b.Navigation("MovimientosCuenta");
 
                     b.Navigation("Unidades");
                 });

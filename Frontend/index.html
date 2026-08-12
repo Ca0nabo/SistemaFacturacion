@@ -3,1004 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabitaCont</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <title>HabitaCont | Gestión de arrendamientos</title>
+    <link rel="stylesheet" href="css/styles.css?v=20260811-finalclean">
 </head>
 <body>
-    <div id="app">
-        <aside id="sidebar" class="sidebar hidden">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">H</div>
-                <h2>HabitaCont</h2>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="#" data-view="dashboard" class="nav-item active">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1"/><rect x="2" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg></span>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" data-view="facturas" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h5l4 4v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><polyline points="10 2 10 6 14 6"/></svg></span>
-                    <span>Facturas</span>
-                </a>
-                <a href="#" data-view="contratos" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h5l4 4v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><polyline points="10 2 10 6 14 6"/><line x1="6" y1="9" x2="12" y2="9"/><line x1="6" y1="12" x2="10" y2="12"/></svg></span>
-                    <span>Contratos</span>
-                </a>
-                <a href="#" data-view="propiedades" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l7-7 7 7"/><path d="M4 8v7a1 1 0 0 0 1 1h3v-4h4v4h3a1 1 0 0 0 1-1V8"/></svg></span>
-                    <span>Propiedades</span>
-                </a>
-                <a href="#" data-view="clientes" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="5.5" r="3"/><path d="M3 15a6 6 0 0 1 12 0"/></svg></span>
-                    <span>Clientes</span>
-                </a>
-                <a href="#" data-view="proveedores" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="11" width="14" height="5" rx="1"/><rect x="4" y="3" width="10" height="8" rx="1"/></svg></span>
-                    <span>Proveedores</span>
-                </a>
-                <a href="#" data-view="movimientos" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="15" y2="9"/><polyline points="11 5 15 9 11 13"/><polyline points="7 5 3 9 7 13"/></svg></span>
-                    <span>Movimientos</span>
-                </a>
-                <a href="#" data-view="gastos" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7"/><line x1="5" y1="9" x2="13" y2="9"/></svg></span>
-                    <span>Gastos</span>
-                </a>
-                <a href="#" data-view="acuerdos-pago" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l4-4 4 4-4 4z"/><path d="M16 11l-4-4-4 4 4 4z"/><path d="M6 7l4 4 4-4"/></svg></span>
-                    <span>Acuerdos de Pago</span>
-                </a>
-                <a href="#" data-view="reportes" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="3" height="5"/><rect x="7.5" y="7" width="3" height="9"/><rect x="12" y="3" width="3" height="13"/></svg></span>
-                    <span>Reportes</span>
-                </a>
-                <a href="#" data-view="usuarios" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="3"/><path d="M3 17a6 6 0 0 1 12 0"/></svg></span>
-                    <span>Usuarios</span>
-                </a>
-                <a href="#" data-view="auditoria" class="nav-item">
-                    <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2l5 1.7v4.6a6.5 6.5 0 0 1-5 5 6.5 6.5 0 0 1-5-5V3.7L9 2z"/><path d="M7 9l1.5 1.5 3-3"/></svg></span>
-                    <span>Auditoría</span>
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <span id="user-info"></span>
-                <a href="#" data-view="perfil" class="nav-item btn-perfil">Mi Perfil</a>
-                <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
-            </div>
-        </aside>
+<div id="app">
+    <aside id="sidebar" class="sidebar hidden">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">H</div>
+            <div><h2>HabitaCont</h2></div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" data-view="dashboard" data-permission="DASHBOARD.VER" class="nav-item active"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span>Dashboard</span></a>
+            <a href="#" data-view="propietarios" data-permission="ENTIDADES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg></span><span>Propietarios</span></a>
+            <a href="#" data-view="clientes" data-permission="ENTIDADES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 21a6 6 0 0 1 12 0M14 20a5 5 0 0 1 7 0"/></svg></span><span>Inquilinos</span></a>
+            <a href="#" data-view="propiedades" data-permission="PROPIEDADES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m3 11 9-7 9 7"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></svg></span><span>Propiedades</span></a>
+            <a href="#" data-view="contratos" data-permission="CONTRATOS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M14 3v4h4M9 11h6M9 15h6"/></svg></span><span>Contratos</span></a>
+            <a href="#" data-view="facturas" data-permission="FACTURAS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><span>Facturación mensual</span></a>
+            <a href="#" data-view="depositos" data-permission="DEPOSITOS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V7z"/><path d="M9 12h6M12 9v6"/></svg></span><span>Depósitos</span></a>
+            <a href="#" data-view="acuerdos-pago" data-permission="ACUERDOS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7 21 4M6 17l-3 3"/></svg></span><span>Acuerdos de pago</span></a>
+            <a href="#" data-view="movimientos" data-permission="MOVIMIENTOS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 7h14l-3-3M20 17H6l3 3"/><path d="m18 7 3-3M6 17l-3 3"/></svg></span><span>Movimientos</span></a>
+            <a href="#" data-view="gastos" data-permission="GASTOS.GESTIONAR" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h4"/></svg></span><span>Gastos</span></a>
+            <a href="#" data-view="proveedores" data-permission="ENTIDADES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3M3 12h18M10 12v2h4v-2"/></svg></span><span>Proveedores</span></a>
+            <a href="#" data-view="reportes" data-permission="REPORTES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span>Reportes</span></a>
+            <a href="#" data-view="usuarios" data-permission="USUARIOS.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="3"/><path d="M4 20a6 6 0 0 1 12 0M18 8v6M15 11h6"/></svg></span><span>Usuarios</span></a>
+            <a href="#" data-view="roles" data-permission="ROLES.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V7z"/><path d="m9 12 2 2 4-5"/></svg></span><span>Roles y permisos</span></a>
+            <a href="#" data-view="auditoria" data-permission="AUDITORIA.VER" class="nav-item"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M7 4h10v17H7z"/><path d="M9 4V2h6v2M10 10l2 2 4-4M10 16h5"/></svg></span><span>Auditoría</span></a>
+        </nav>
+    </aside>
 
-        <main id="main-content" class="main-content">
-            <div id="top-bar" class="top-bar">
-                <div class="top-bar-left">
-                    <span id="view-title" class="top-bar-title">Dashboard</span>
-                </div>
-                <div class="top-bar-right">
-                    <div class="alerts-container">
-                        <button id="btn-alertas" class="btn-alerts" title="Alertas">
-                            <span class="bell-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17a1.5 1.5 0 0 0 1.5-1.5h-3A1.5 1.5 0 0 0 10 17z"/><path d="M5.5 9a4.5 4.5 0 0 1 9 0c0 3 1 4 2 4.5h-13c1-.5 2-1.5 2-4.5z"/></svg></span>
-                            <span id="alertas-count" class="alertas-badge hidden">0</span>
+    <main id="main-content" class="main-content">
+        <div id="top-bar" class="top-bar hidden">
+            <span id="view-title" class="top-bar-title">Dashboard</span>
+            <div class="top-bar-actions">
+                <div id="topbar-user-menu-wrap" class="topbar-user-menu-wrap">
+                    <button id="topbar-user-chip" class="topbar-user-chip" type="button" aria-haspopup="menu" aria-expanded="false" title="Abrir menú de usuario">
+                        <span id="topbar-user-initials" class="user-avatar">HC</span>
+                        <span class="topbar-user-copy">
+                            <strong id="topbar-user-name">Usuario</strong>
+                            <small id="topbar-user-role">Rol</small>
+                        </span>
+                        <svg class="topbar-user-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+                    </button>
+                    <div id="topbar-user-menu" class="topbar-user-menu hidden" role="menu">
+                        <div class="topbar-user-menu-header">
+                            <span id="topbar-menu-initials" class="user-avatar user-avatar-lg">HC</span>
+                            <div class="topbar-menu-identity">
+                                <strong id="topbar-menu-name">Usuario</strong>
+                                <span id="topbar-menu-email">correo@habitacont.com</span>
+                                <small id="topbar-menu-role" class="topbar-menu-role">Rol</small>
+                            </div>
+                        </div>
+                        <button id="btn-topbar-profile" class="topbar-user-menu-item" type="button" role="menuitem">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>
+                            <strong>Mi perfil</strong>
                         </button>
-                        <div id="alertas-dropdown" class="alertas-dropdown hidden">
-                            <div class="alertas-dropdown-header">
-                                <strong>Notificaciones</strong>
-                            </div>
-                            <div id="alertas-list" class="alertas-list">
-                                <div class="alertas-empty">Sin alertas</div>
-                            </div>
-                        </div>
+                        <button id="btn-topbar-logout" class="topbar-user-menu-item danger" type="button" role="menuitem">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/></svg>
+                            <strong>Cerrar sesión</strong>
+                        </button>
+                    </div>
+                </div>
+                <div class="alerts-container" data-permission="ALERTAS.VER">
+                    <button id="btn-alertas" class="btn-alerts" type="button" title="Alertas" aria-label="Abrir alertas">
+                        <svg class="alerts-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+                        <span id="alertas-count" class="alertas-badge hidden">0</span>
+                    </button>
+                    <div id="alertas-dropdown" class="alertas-dropdown hidden">
+                        <div class="alertas-dropdown-header"><strong>Alertas</strong></div>
+                        <div id="alertas-list" class="alertas-list"><div class="alertas-empty">Sin alertas</div></div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <section id="view-login" class="view">
-                <div class="login-container">
-                    <div class="login-card">
-                        <div class="login-header">
-                            <div class="login-logo">H</div>
-                            <h1>HabitaCont</h1>
-                            <p>Control Contable · e-CF</p>
-                        </div>
-                        <form id="login-form" class="login-form">
-                            <div class="form-group">
-                                <label for="login-email">Correo Electrónico</label>
-                                <input type="email" id="login-email" placeholder="usuario@ejemplo.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="login-password">Contraseña</label>
-                                    <div class="password-wrapper">
-                                        <input type="password" id="login-password" placeholder="••••••••">
-                                        <button type="button" class="btn-toggle-password" tabindex="-1" data-toggle-password>👁️</button>
-                                    </div>
-                                </div>
-                            <div id="login-error" class="form-error hidden"></div>
-                            <button type="submit" id="btn-login" class="btn btn-primary btn-full">
-                                Iniciar Sesión
-                            </button>
-                        </form>
-                    </div>
+        <!-- LOGIN -->
+        <section id="view-login" class="view">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header"><div class="login-logo">H</div><h1>HabitaCont</h1><p>Gestión inmobiliaria, contratos y cobros</p></div>
+                    <form id="login-form" class="login-form">
+                        <div class="form-group"><label>Correo electrónico</label><input type="email" id="login-email" required placeholder="admin@sistema.com"></div>
+                        <div class="form-group"><label>Contraseña</label><div class="password-wrapper"><input type="password" id="login-password" required><button type="button" class="btn-toggle-password" data-toggle-password>👁</button></div></div>
+                        <div id="login-error" class="form-error hidden"></div>
+                        <button type="submit" id="btn-login" class="btn btn-primary btn-full">Iniciar sesión</button>
+                    </form>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="view-dashboard" class="view hidden">
-                <div class="page-header">
-                    <h1>Dashboard</h1>
-                    <span id="dashboard-date" class="page-date"></span>
+        <!-- DASHBOARD -->
+        <section id="view-dashboard" class="view hidden">
+            <div class="page-header dashboard-page-header">
+                <div>
+                    <h1>Resumen operativo</h1>
+                    
                 </div>
-                <div class="metrics-grid" id="dashboard-metrics">
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#e8f5e9">
-                            <span>📈</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Ingresos del Mes</span>
-                            <span class="metric-value" id="metric-ingresos">RD$0.00</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#fce4ec">
-                            <span>📉</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Gastos del Mes</span>
-                            <span class="metric-value" id="metric-gastos">RD$0.00</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#e3f2fd">
-                            <span>💳</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Total CxC</span>
-                            <span class="metric-value" id="metric-cxc">RD$0.00</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#fff3e0">
-                            <span>📋</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Total CxP</span>
-                            <span class="metric-value" id="metric-cxp">RD$0.00</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#e8eaf6">
-                            <span>📐</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Margen de Ganancia</span>
-                            <span class="metric-value" id="metric-margen">0%</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#f3e5f5">
-                            <span>🏠</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Ocupación</span>
-                            <span class="metric-value" id="metric-ocupacion">0%</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#e0f7fa">
-                            <span>📋</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Contratos Activos</span>
-                            <span class="metric-value" id="metric-contratos">0</span>
-                        </div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-icon" style="background:#fff9c4">
-                            <span>🔔</span>
-                        </div>
-                        <div class="metric-info">
-                            <span class="metric-label">Contratos x Vencer</span>
-                            <span class="metric-value" id="metric-contratos-vencer">0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Ingresos vs Gastos</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-container" id="chart-container">
-                                <div class="chart-bars" id="chart-bars"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Últimas Facturas</h3>
-                        </div>
-                        <div class="card-body">
-                            <table class="table" id="dashboard-facturas-table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Cliente</th>
-                                        <th>Monto</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dashboard-facturas-body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <span id="dashboard-date" class="page-date"></span>
+            </div>
 
-            <section id="view-facturas" class="view hidden">
-                <div class="page-header">
-                    <h1>Facturas Electrónicas</h1>
-                    <button id="btn-nueva-factura" class="btn btn-primary">+ Nueva Factura</button>
-                </div>
-                <div class="card">
+            <div class="metrics-grid dashboard-metrics">
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="facturas-current" title="Abrir facturas del mes actual">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"></path><path d="M9 8h6M9 12h6M9 16h3"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Facturado este mes</span><span id="metric-ingresos" class="metric-value">RD$0.00</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="cobros-current" title="Abrir movimientos cobrados durante el mes">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v12H4z"></path><path d="M8 7V5h8v2M8 13l2.5 2.5L16 10"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Cobrado este mes</span><span id="metric-cobrado" class="metric-value">RD$0.00</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="gastos" title="Abrir registro de gastos">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"></path><path d="M8 9h8M8 13h5M16 16l3 3M19 16l-3 3"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Gastos del mes</span><span id="metric-gastos" class="metric-value">RD$0.00</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="cxc" title="Abrir estado de cuenta y saldos pendientes">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6M12 17h.01"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Cuentas por cobrar</span><span id="metric-cxc" class="metric-value">RD$0.00</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="cxp" title="Abrir cuentas por pagar">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v14M7 12l5 5 5-5"></path><path d="M5 21h14"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Cuentas por pagar</span><span id="metric-cxp" class="metric-value">RD$0.00</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="ocupacion" title="Abrir propiedades alquiladas">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7"></path><path d="M5 10v10h14V10M9 20v-6h6v6"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Ocupación</span><span id="metric-ocupacion" class="metric-value">0%</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="contratos" title="Abrir contratos">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"></path><path d="M14 3v4h4M9 11h6M9 15h6"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Contratos activos</span><span id="metric-contratos" class="metric-value">0</span></span>
+                </button>
+                <button type="button" class="metric-card metric-card-action" data-dashboard-target="contratos-vencer" title="Abrir contratos próximos a vencer">
+                    <span class="metric-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v5l3 2M9 3h6"></path></svg></span>
+                    <span class="metric-info"><span class="metric-label">Contratos por vencer</span><span id="metric-contratos-vencer" class="metric-value">0</span></span>
+                </button>
+                <span id="metric-margen" class="hidden"></span>
+            </div>
+
+            <div class="dashboard-grid dashboard-main-grid">
+                <div class="card dashboard-chart-card">
+                    <div class="card-header"><h3>Comportamiento de facturación</h3><span class="card-header-note">Últimos 6 meses</span></div>
                     <div class="card-body">
-                        <table class="table" id="facturas-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>e-CF</th>
-                                    <th>Cliente</th>
-                                    <th>RNC</th>
-                                    <th>Fecha</th>
-                                    <th>Subtotal</th>
-                                    <th>ITBIS</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="facturas-body"></tbody>
+                        <div class="chart-container"><div id="chart-bars" class="chart-bars"></div></div>
+                        <div class="chart-legend">
+                            <span class="chart-legend-item"><i class="chart-legend-dot billed-dot"></i>Facturado por período</span>
+                            <span class="chart-legend-item"><i class="chart-legend-dot paid-dot"></i>Cobrado por fecha de pago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card dashboard-invoices-card">
+                    <div class="card-header"><h3>Últimas facturas</h3><button type="button" class="link-button" onclick="navigateTo('facturas')">Ver todas</button></div>
+                    <div class="card-body table-responsive">
+                        <table class="table dashboard-invoices-table">
+                            <thead><tr><th>Factura</th><th>Inquilino</th><th>Tipo</th><th>Cobro</th><th>Estado</th><th></th></tr></thead>
+                            <tbody id="dashboard-facturas-body"></tbody>
                         </table>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="view-factura-form" class="view hidden">
-                <div class="page-header">
-                    <h1 id="factura-form-title">Nueva Factura e-CF</h1>
-                    <button id="btn-volver-facturas" class="btn btn-secondary">← Volver</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="factura-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="factura-cliente">Cliente</label>
-                                    <select id="factura-cliente" required>
-                                        <option value="">Seleccione un cliente...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="factura-fecha">Fecha de Emisión</label>
-                                    <input type="date" id="factura-fecha" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="factura-cuotas">Cuotas</label>
-                                    <input type="number" id="factura-cuotas" min="1" step="1" value="1">
-                                </div>
-                            </div>
-                            <h3 class="section-title">Detalle de Factura</h3>
-                            <div class="table-responsive">
-                                <table class="table" id="detalle-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:50%">Ítem / Descripción</th>
-                                            <th style="width:15%">Cantidad</th>
-                                            <th style="width:15%">Precio</th>
-                                            <th style="width:15%">Subtotal</th>
-                                            <th style="width:40px"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="detalle-body">
-                                        <tr class="detalle-row">
-                                            <td><input type="text" class="item-desc" placeholder="Descripción del ítem" required></td>
-                                            <td><input type="number" class="item-cant" min="0.01" step="0.01" value="1" required></td>
-                                            <td><input type="number" class="item-precio" min="0.01" step="0.01" value="0" required></td>
-                                            <td><span class="item-subtotal">RD$0.00</span></td>
-                                            <td><button type="button" class="btn-remove-row" title="Eliminar">×</button></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="4"></td>
-                                            <td><button type="button" id="btn-add-row" class="btn btn-sm btn-secondary">+</button></td>
-                                        </tr>
-                                        <tr class="total-row">
-                                            <td colspan="3" class="text-right"><strong>Subtotal</strong></td>
-                                            <td><strong id="factura-subtotal">RD$0.00</strong></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr class="total-row">
-                                            <td colspan="3" class="text-right"><strong>ITBIS (18%)</strong></td>
-                                            <td><strong id="factura-itbis">RD$0.00</strong></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr class="total-row grand-total">
-                                            <td colspan="3" class="text-right"><strong>Total</strong></td>
-                                            <td><strong id="factura-total">RD$0.00</strong></td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div id="factura-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-factura" class="btn btn-primary btn-lg">
-                                    Emitir Factura Electrónica
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- ENTIDADES -->
+        <section id="view-clientes" class="view hidden entity-list-view">
+            <div class="page-header"><div><h1>Inquilinos / Clientes</h1></div><button id="btn-nuevo-cliente" data-permission="ENTIDADES.GESTIONAR" class="btn btn-primary">+ Nuevo inquilino</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Cédula/RNC</th><th>Nombre</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="clientes-body"></tbody></table></div></div>
+        </section>
+        <section id="view-propietarios" class="view hidden entity-list-view">
+            <div class="page-header"><div><h1>Propietarios</h1></div><button id="btn-nuevo-propietario" data-permission="ENTIDADES.GESTIONAR" class="btn btn-primary">+ Nuevo propietario</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Cédula/RNC</th><th>Nombre</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="propietarios-body"></tbody></table></div></div>
+        </section>
+        <section id="view-proveedores" class="view hidden entity-list-view">
+            <div class="page-header"><div><h1>Proveedores</h1></div><button id="btn-nuevo-proveedor" data-permission="ENTIDADES.GESTIONAR" class="btn btn-primary">+ Nuevo proveedor</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>RNC/Cédula</th><th>Razón social</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="proveedores-body"></tbody></table></div></div>
+        </section>
+        <section id="view-entidad-form" class="view hidden">
+            <div class="page-header"><h1 id="entidad-form-title">Nueva entidad</h1><button id="btn-volver-entidades" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="entidad-form"><input type="hidden" id="entidad-id"><input type="hidden" id="entidad-tipo"><div class="form-row"><div class="form-group"><label id="entidad-documento-label">Cédula o RNC *</label><input id="entidad-rnc" inputmode="numeric" autocomplete="off" maxlength="13" placeholder="000-0000000-0" required></div><div class="form-group"><label>Nombre / Razón social *</label><input id="entidad-razon" maxlength="200" required></div></div><div id="entidad-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-entidad" class="btn btn-primary" type="submit">Guardar</button></div></form></div></div>
+        </section>
 
-            <section id="view-clientes" class="view hidden">
-                <div class="page-header">
-                    <h1>Clientes</h1>
-                    <button id="btn-nuevo-cliente" class="btn btn-primary">+ Nuevo Cliente</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>RNC</th>
-                                    <th>Razón Social</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="clientes-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- PROPIEDADES -->
+        <section id="view-propiedades" class="view hidden">
+            <div class="page-header"><div><h1>Propiedades</h1></div><button id="btn-nueva-propiedad" data-permission="PROPIEDADES.GESTIONAR" class="btn btn-primary">+ Nueva propiedad</button></div>
+            <div class="filter-bar"><select id="filter-tipo-propiedad"><option value="">Todos los tipos</option><option>Casa</option><option>Apartamento</option><option>Local</option><option>Oficina</option><option>Otro</option></select><select id="filter-estado-propiedad"><option value="">Todos los estados</option><option>Disponible</option><option>Alquilada</option><option>Mantenimiento</option><option>Inactiva</option></select></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>Código</th><th>Tipo / Dirección</th><th>Propietario</th><th>Alquiler sugerido</th><th>Mantenimiento</th><th>Unidades</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="propiedades-body"></tbody></table></div></div>
+        </section>
+        <section id="view-propiedad-form" class="view hidden">
+            <div class="page-header"><h1>Nueva propiedad</h1><button id="btn-volver-propiedades" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="propiedad-form"><input type="hidden" id="propiedad-id">
+                <div class="form-row"><div class="form-group"><label>Propietario *</label><select id="propiedad-propietario" required></select></div><div class="form-group"><label>Código *</label><input id="propiedad-codigo" placeholder="PROP-001" required></div></div>
+                <div class="form-row"><div class="form-group"><label>Tipo *</label><select id="propiedad-tipo" required><option value="">Seleccione...</option><option>Casa</option><option>Apartamento</option><option>Local</option><option>Oficina</option><option>Otro</option></select></div><div class="form-group"><label>Dirección *</label><input id="propiedad-direccion" required></div></div>
+                <div class="form-row"><div class="form-group"><label>Sector</label><input id="propiedad-sector"></div><div class="form-group"><label>Ciudad</label><input id="propiedad-ciudad"></div></div>
+                <div class="form-row form-row-3"><div class="form-group"><label>Metros cuadrados *</label><input type="number" id="propiedad-metros" min="0.01" step="0.01" required></div><div class="form-group"><label>Habitaciones</label><input type="number" id="propiedad-habitaciones" min="0"></div><div class="form-group"><label>Baños</label><input type="number" id="propiedad-banos" min="0"></div></div>
+                <div class="form-row"><div class="form-group"><label>Alquiler mensual sugerido (RD$) *</label><input type="number" id="propiedad-canon" min="0" step="0.01" required></div><div class="form-group"><label>Mantenimiento mensual sugerido (RD$)</label><input type="number" id="propiedad-mantenimiento" min="0" step="0.01" value="0"></div></div>
+                <label class="checkbox-label"><input type="checkbox" id="propiedad-parqueo"> Tiene parqueo</label>
+                <div id="propiedad-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-propiedad" type="submit" class="btn btn-primary">Guardar propiedad</button></div>
+            </form></div></div>
+            <div id="unidades-card" class="card" style="display:none"><div class="card-header flex-between"><h3>Unidades de la propiedad</h3><button id="btn-nueva-unidad" data-permission="PROPIEDADES.GESTIONAR" class="btn btn-sm btn-primary">+ Unidad</button></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Código</th><th>Piso</th><th>m²</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="unidades-body"></tbody></table></div></div>
+        </section>
 
-            <section id="view-propiedades" class="view hidden">
-                <div class="page-header">
-                    <h1>Propiedades</h1>
-                    <button id="btn-nueva-propiedad" class="btn btn-primary">+ Nueva Propiedad</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="filters-row">
-                            <select id="filter-tipo-propiedad">
-                                <option value="">Todos los tipos</option>
-                                <option value="Apartamento">Apartamento</option>
-                                <option value="Casa">Casa</option>
-                                <option value="Local">Local</option>
-                                <option value="Oficina">Oficina</option>
-                                <option value="Terreno">Terreno</option>
-                                <option value="Parqueo">Parqueo</option>
-                            </select>
-                            <select id="filter-estado-propiedad">
-                                <option value="">Todos los estados</option>
-                                <option value="Disponible">Disponible</option>
-                                <option value="Alquilada">Alquilada</option>
-                                <option value="EnMantenimiento">En Mantenimiento</option>
-                                <option value="Vendida">Vendida</option>
-                            </select>
-                        </div>
-                        <table class="table" id="propiedades-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Tipo</th>
-                                    <th>Dirección</th>
-                                    <th>Sector</th>
-                                    <th>Propietario</th>
-                                    <th>M²</th>
-                                    <th>Unidades</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="propiedades-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- CONTRATOS -->
+        <section id="view-contratos" class="view hidden">
+            <div class="page-header"><div><h1>Contratos de arrendamiento</h1></div><button id="btn-nuevo-contrato" data-permission="CONTRATOS.GESTIONAR" class="btn btn-primary">+ Nuevo contrato</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>Contrato</th><th>Inquilino</th><th>Propiedad / Unidad</th><th>Alquiler</th><th>Mantenimiento</th><th>Total mensual</th><th>Vigencia</th><th>Día pago</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="contratos-body"></tbody></table></div></div>
+        </section>
+        <section id="view-contrato-form" class="view hidden">
+            <div class="page-header"><h1>Nuevo contrato</h1><button id="btn-volver-contratos" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="contrato-form">
+                <div class="form-row"><div class="form-group"><label>Inquilino *</label><select id="contrato-cliente" required></select></div><div class="form-group"><label>Propiedad *</label><select id="contrato-propiedad" required></select></div></div>
+                <div class="form-row"><div class="form-group"><label>Unidad (opcional)</label><select id="contrato-unidad"><option value="">Propiedad completa</option></select></div><div class="form-group"><label>Tipo de contrato *</label><select id="contrato-tipo"><option>Arrendamiento</option><option>Alquiler comercial</option><option>Alquiler temporal</option></select></div></div>
+                <div class="form-row"><div class="form-group"><label>Fecha de inicio *</label><input type="date" id="contrato-fecha-inicio" required></div><div class="form-group"><label>Fecha de finalización *</label><input type="date" id="contrato-fecha-vencimiento" required></div></div>
+                <div class="form-row form-row-3"><div class="form-group"><label>Alquiler mensual (RD$) *</label><input type="number" id="contrato-monto" min="0.01" step="0.01" required></div><div class="form-group"><label>Mantenimiento mensual (RD$)</label><input type="number" id="contrato-mantenimiento" min="0" step="0.01" value="0"></div><div class="form-group"><label>Depósito requerido (RD$)</label><input type="number" id="contrato-deposito" min="0" step="0.01" value="0"></div></div>
+                <div class="form-row"><div class="form-group"><label>Día de pago mensual *</label><input type="number" id="contrato-dia-pago" min="1" max="31" value="5" required></div><div class="form-group"><label>Impuesto</label><label class="checkbox-label"><input type="checkbox" id="contrato-itbis"> Aplicar ITBIS a las facturas del contrato</label></div></div>
+                <div class="form-group"><label>Condiciones *</label><textarea id="contrato-condiciones" rows="4" required placeholder="Condiciones, mora, renovaciones y responsabilidades..."></textarea></div>
+                <div id="contrato-total-preview" class="inline-summary">Total mensual: <strong>RD$0.00</strong></div>
+                <div id="contrato-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-contrato" type="submit" class="btn btn-primary">Guardar contrato</button></div>
+            </form></div></div>
+        </section>
 
-            <section id="view-propiedad-form" class="view hidden">
-                <div class="page-header">
-                    <h1 id="propiedad-form-title">Nueva Propiedad</h1>
-                    <button id="btn-volver-propiedades" class="btn btn-secondary">← Volver</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="propiedad-form">
-                            <input type="hidden" id="propiedad-id">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="propiedad-propietario">Propietario</label>
-                                    <select id="propiedad-propietario" required>
-                                        <option value="">Seleccione un propietario...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="propiedad-tipo">Tipo de Propiedad</label>
-                                    <select id="propiedad-tipo" required>
-                                        <option value="">Seleccione...</option>
-                                        <option value="Apartamento">Apartamento</option>
-                                        <option value="Casa">Casa</option>
-                                        <option value="Local">Local</option>
-                                        <option value="Oficina">Oficina</option>
-                                        <option value="Terreno">Terreno</option>
-                                        <option value="Parqueo">Parqueo</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="propiedad-direccion">Dirección</label>
-                                <input type="text" id="propiedad-direccion" required>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="propiedad-sector">Sector</label>
-                                    <input type="text" id="propiedad-sector">
-                                </div>
-                                <div class="form-group">
-                                    <label for="propiedad-ciudad">Ciudad</label>
-                                    <input type="text" id="propiedad-ciudad">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="propiedad-metros">Metros Cuadrados</label>
-                                    <input type="number" id="propiedad-metros" min="0.01" step="0.01" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="propiedad-habitaciones">Habitaciones</label>
-                                    <input type="number" id="propiedad-habitaciones" min="0">
-                                </div>
-                                <div class="form-group">
-                                    <label for="propiedad-banos">Baños</label>
-                                    <input type="number" id="propiedad-banos" min="0">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" id="propiedad-parqueo">
-                                    Tiene Parqueo
-                                </label>
-                            </div>
-                            <div id="propiedad-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-propiedad" class="btn btn-primary btn-lg">
-                                    Guardar Propiedad
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="card" id="unidades-card" style="display:none">
-                    <div class="card-header">
-                        <h3>Unidades</h3>
-                        <button id="btn-nueva-unidad" class="btn btn-sm btn-primary">+ Unidad</button>
-                    </div>
-                    <div class="card-body">
-                        <table class="table" id="unidades-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Código</th>
-                                    <th>Piso</th>
-                                    <th>M²</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="unidades-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- FACTURACIÓN -->
+        <section id="view-facturas" class="view hidden">
+            <div class="page-header"><div><h1>Facturación mensual</h1></div><div class="header-actions"><button id="btn-generar-lote" data-permission="FACTURAS.CREAR" class="btn btn-secondary">Generar todas del mes</button><button id="btn-nueva-factura" data-permission="FACTURAS.CREAR" class="btn btn-primary">+ Factura mensual</button></div></div>
+            <div class="filter-bar"><select id="facturas-filter-estado"><option value="">Todos los estados</option><option>EMITIDA</option><option>PENDIENTE</option><option>EN_PROCESO</option><option>PARCIAL</option><option>EN_ACUERDO</option><option>PAGADA</option><option>ANULADA</option></select><select id="facturas-filter-tipo"><option value="">Todos los tipos</option><option value="CONTADO">Al contado</option><option value="CREDITO">A crédito</option></select><input id="facturas-filter-periodo" type="month"><button id="btn-filtrar-facturas" class="btn btn-secondary btn-sm">Filtrar</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>Factura</th><th>Tipo</th><th>Contrato / período</th><th>Inquilino</th><th>Propiedad</th><th>Vence</th><th>Total</th><th>Pagado</th><th>Pendiente</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="facturas-body"></tbody></table></div></div>
+        </section>
+        <section id="view-factura-form" class="view hidden">
+            <div class="page-header"><h1>Generar factura mensual</h1><button id="btn-volver-facturas" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="factura-form">
+                <div class="form-row"><div class="form-group"><label>Contrato vigente en el período *</label><select id="factura-contrato" required></select></div><div class="form-group"><label>Período a facturar *</label><input type="month" id="factura-periodo" required></div></div>
+                <div class="form-row"><div class="form-group"><label>Tipo de factura *</label><select id="factura-tipo" required><option value="CONTADO">Al contado</option><option value="CREDITO">A crédito</option></select></div><div id="factura-cuotas-group" class="form-group hidden"><label>Cantidad de cuotas *</label><input type="number" id="factura-cuotas" min="2" max="24" value="3"></div></div>
+                <div class="form-row"><div class="form-group"><label>Fecha de primer vencimiento</label><input type="date" id="factura-vencimiento"></div><div class="form-group"><label>Resumen</label><div id="factura-resumen-contrato" class="inline-summary">Seleccione un contrato.</div></div></div>
+                <div id="factura-condicion-resumen" class="payment-rule payment-rule-cash"><strong>Al contado:</strong> el pago debe cubrir el 100% del saldo en una sola operación.</div>
+                <div id="factura-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-factura" type="submit" class="btn btn-primary">Generar factura</button></div>
+            </form></div></div>
+        </section>
 
-            <section id="view-proveedores" class="view hidden">
-                <div class="page-header">
-                    <h1>Proveedores</h1>
-                    <button id="btn-nuevo-proveedor" class="btn btn-primary">+ Nuevo Proveedor</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>RNC</th>
-                                    <th>Razón Social</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="proveedores-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- DEPÓSITOS -->
+        <section id="view-depositos" class="view hidden">
+            <div class="page-header"><div><h1>Depósitos de garantía</h1></div><button id="btn-nuevo-deposito" data-permission="DEPOSITOS.GESTIONAR" class="btn btn-primary">+ Registrar depósito</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Contrato / Inquilino</th><th>Propiedad</th><th>Requerido</th><th>Recibido</th><th>Pendiente</th><th>Recepción</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="depositos-body"></tbody></table></div></div>
+        </section>
+        <section id="view-deposito-form" class="view hidden">
+            <div class="page-header"><h1>Depósito de garantía</h1><button id="btn-volver-depositos" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="deposito-form"><input type="hidden" id="deposito-id">
+                <div class="form-row"><div class="form-group"><label>Contrato *</label><select id="deposito-contrato" required></select></div><div class="form-group"><label>Estado</label><select id="deposito-estado"><option>Pendiente</option><option>Parcial</option><option>Recibido</option><option>Aplicado</option><option>Devuelto</option></select></div></div>
+                <div class="form-row"><div class="form-group"><label>Monto requerido *</label><input type="number" id="deposito-requerido" min="0" step="0.01" required></div><div class="form-group"><label>Monto recibido</label><input type="number" id="deposito-recibido" min="0" step="0.01" value="0"></div></div>
+                <div class="form-row"><div class="form-group"><label>Fecha de recepción</label><input type="date" id="deposito-fecha-recepcion"></div><div class="form-group"><label>Fecha de devolución</label><input type="date" id="deposito-fecha-devolucion"></div></div>
+                <div class="form-row"><div class="form-group"><label>Método de pago</label><select id="deposito-metodo"><option value="">Seleccione...</option><option>Transferencia</option><option>Efectivo</option><option>Cheque</option><option>Tarjeta</option></select></div><div class="form-group"><label>Referencia</label><input id="deposito-referencia"></div></div>
+                <div class="form-group"><label>Observaciones</label><textarea id="deposito-observaciones" rows="3"></textarea></div>
+                <div id="deposito-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-deposito" class="btn btn-primary" type="submit">Guardar depósito</button></div>
+            </form></div></div>
+        </section>
 
-            <section id="view-entidad-form" class="view hidden">
-                <div class="page-header">
-                    <h1 id="entidad-form-title">Nueva Entidad</h1>
-                    <button id="btn-volver-entidades" class="btn btn-secondary">← Volver</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="entidad-form">
-                            <input type="hidden" id="entidad-id">
-                            <input type="hidden" id="entidad-tipo">
-                            <div class="form-group">
-                                <label for="entidad-rnc">RNC / Cédula</label>
-                                <input type="text" id="entidad-rnc" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="entidad-razon">Razón Social</label>
-                                <input type="text" id="entidad-razon" required>
-                            </div>
-                            <div id="entidad-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-entidad" class="btn btn-primary btn-lg">
-                                    Guardar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- ACUERDOS -->
+        <section id="view-acuerdos-pago" class="view hidden">
+            <div class="page-header"><div><h1>Acuerdos de pago</h1></div><button id="btn-nuevo-acuerdo" data-permission="ACUERDOS.GESTIONAR" class="btn btn-primary">+ Nuevo acuerdo</button></div>
+            <div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>Acuerdo</th><th>Contrato / Inquilino</th><th>Factura origen</th><th>Original</th><th>Acordado</th><th>Pagado</th><th>Saldo</th><th>Cuotas</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="acuerdos-body"></tbody></table></div></div>
+            <div id="acuerdo-cuotas-card" class="card hidden"><div class="card-header"><h3 id="acuerdo-cuotas-title">Cuotas</h3></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>#</th><th>Vencimiento</th><th>Monto</th><th>Pagado</th><th>Saldo</th><th>Estado</th><th>Acción</th></tr></thead><tbody id="acuerdo-cuotas-body"></tbody></table></div></div>
+        </section>
+        <section id="view-acuerdo-form" class="view hidden">
+            <div class="page-header"><h1>Nuevo acuerdo de pago</h1><button id="btn-volver-acuerdos" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card"><div class="card-body"><form id="acuerdo-form">
+                <div class="form-row"><div class="form-group"><label>Contrato *</label><select id="acuerdo-contrato" required></select></div><div class="form-group"><label>Factura pendiente de origen *</label><select id="acuerdo-factura" required><option value="">Seleccione primero un contrato</option></select></div></div>
+                <div class="form-row form-row-3"><div class="form-group"><label>Monto original *</label><input type="number" id="acuerdo-original" min="0.01" step="0.01" required></div><div class="form-group"><label>Monto a financiar *</label><input type="number" id="acuerdo-acordado" min="0.01" step="0.01" required readonly></div><div class="form-group"><label>Cantidad de cuotas *</label><input type="number" id="acuerdo-cuotas" min="2" max="120" value="3" required></div></div>
+                <div class="form-row"><div class="form-group"><label>Inicio del acuerdo *</label><input type="date" id="acuerdo-fecha-inicio" required></div><div class="form-group"><label>Día de pago *</label><input type="number" id="acuerdo-dia-pago" min="1" max="31" value="5" required></div></div>
+                <div class="form-group"><label>Observaciones</label><textarea id="acuerdo-observaciones" rows="3"></textarea></div>
+                <div id="acuerdo-preview" class="inline-summary">Cuota estimada: <strong>RD$0.00</strong></div>
+                <div id="acuerdo-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-acuerdo" class="btn btn-primary" type="submit">Crear acuerdo</button></div>
+            </form></div></div>
+        </section>
 
-            <section id="view-movimientos" class="view hidden">
-                <div class="page-header">
-                    <h1>Cuentas por Cobrar / Pagar</h1>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Factura</th>
-                                    <th>Tipo</th>
-                                    <th>Monto Pendiente</th>
-                                    <th>Vencimiento</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="movimientos-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- MOVIMIENTOS -->
+        <section id="view-movimientos" class="view hidden">
+            <div class="page-header"><div><h1>Movimientos transaccionales</h1></div><button id="btn-exportar-movimientos" data-permission="MOVIMIENTOS.VER" class="btn btn-secondary">Exportar CSV</button></div>
+            <div class="card"><div class="card-body"><div class="filter-grid"><div class="form-group"><label>Inquilino</label><select id="mov-filter-cliente"><option value="">Todos</option></select></div><div class="form-group"><label>Propiedad</label><select id="mov-filter-propiedad"><option value="">Todas</option></select></div><div class="form-group"><label>Propietario</label><select id="mov-filter-propietario"><option value="">Todos</option></select></div><div class="form-group"><label>Contrato</label><select id="mov-filter-contrato"><option value="">Todos</option></select></div><div class="form-group"><label>Desde</label><input type="date" id="mov-filter-desde"></div><div class="form-group"><label>Hasta</label><input type="date" id="mov-filter-hasta"></div></div><div class="form-actions compact"><button id="btn-filtrar-movimientos" class="btn btn-primary">Aplicar filtros</button><button id="btn-limpiar-movimientos" class="btn btn-secondary">Limpiar</button></div></div></div>
+            <div class="metrics-grid metrics-grid-3"><div class="metric-card"><div class="metric-info"><span class="metric-label">Monto facturado</span><span id="mov-resumen-debito" class="metric-value">RD$0.00</span></div></div><div class="metric-card"><div class="metric-info"><span class="metric-label">Monto pagado</span><span id="mov-resumen-credito" class="metric-value">RD$0.00</span></div></div><div class="metric-card"><div class="metric-info"><span class="metric-label">Monto pendiente</span><span id="mov-resumen-saldo" class="metric-value">RD$0.00</span></div></div></div>
+            <div class="card"><div class="card-header"><h3>Estado de cuenta</h3></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>Fecha</th><th>Inquilino</th><th>Propiedad</th><th>Contrato</th><th>Factura</th><th>Tipo / Concepto</th><th>Referencia</th><th>Débito</th><th>Crédito</th><th>Balance</th></tr></thead><tbody id="movimientos-body"></tbody></table></div></div>
+            <div class="card"><div class="card-header"><h3>Cuentas pendientes</h3></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>Factura</th><th>Inquilino</th><th>Propiedad</th><th>Vencimiento</th><th>Original</th><th>Pendiente</th><th>Acción</th></tr></thead><tbody id="movimientos-pendientes-body"></tbody></table></div></div>
+        </section>
 
-            <section id="view-contratos" class="view hidden">
-                <div class="page-header">
-                    <h1>Contratos</h1>
-                    <button id="btn-nuevo-contrato" class="btn btn-primary">+ Nuevo Contrato</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table" id="contratos-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>RNC</th>
-                                    <th>Monto</th>
-                                    <th>Inicio</th>
-                                    <th>Vencimiento</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contratos-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- GASTOS -->
+        <section id="view-gastos" class="view hidden">
+            <div class="page-header"><div><h1>Registro de gastos</h1></div></div>
+            <div class="card form-card"><div class="card-body"><form id="gasto-form"><div class="form-row"><div class="form-group"><label>Factura de proveedor *</label><select id="gasto-factura" required></select></div><div class="form-group"><label>Categoría *</label><select id="gasto-categoria" required><option>Mantenimiento</option><option>Reparación</option><option>Servicios</option><option>Administración</option><option>Otro</option></select></div></div><div class="form-row"><div class="form-group"><label>Monto *</label><input type="number" id="gasto-monto" min="0.01" step="0.01" required></div><div class="form-group"><label>Vencimiento *</label><input type="date" id="gasto-fecha-vencimiento" required></div></div><div class="form-group"><label>Evidencia (PDF/JPG/PNG)</label><input type="file" id="gasto-evidencia" accept=".pdf,.png,.jpg,.jpeg"></div><div id="gasto-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-gasto" class="btn btn-primary" type="submit">Registrar gasto</button></div></form></div></div>
+        </section>
 
-            <section id="view-contrato-form" class="view hidden">
-                <div class="page-header">
-                    <h1>Nuevo Contrato</h1>
-                    <button id="btn-volver-contratos" class="btn btn-secondary">← Volver</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="contrato-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contrato-cliente">Cliente / Inquilino</label>
-                                    <select id="contrato-cliente" required>
-                                        <option value="">Seleccione un cliente...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contrato-tipo">Tipo de Contrato</label>
-                                    <select id="contrato-tipo" required>
-                                        <option value="Arrendamiento">Arrendamiento</option>
-                                        <option value="Administracion">Administración</option>
-                                        <option value="Venta">Venta</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contrato-propiedad">Propiedad</label>
-                                    <select id="contrato-propiedad" required>
-                                        <option value="">Seleccione una propiedad...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contrato-unidad">Unidad (opcional)</label>
-                                    <select id="contrato-unidad">
-                                        <option value="">Sin unidad específica</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contrato-monto">Monto de Alquiler (RD$)</label>
-                                    <input type="number" id="contrato-monto" min="0.01" step="0.01" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contrato-mantenimiento">Monto Mantenimiento (RD$)</label>
-                                    <input type="number" id="contrato-mantenimiento" min="0" step="0.01" value="0">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contrato-deposito">Depósito (RD$)</label>
-                                    <input type="number" id="contrato-deposito" min="0" step="0.01" value="0">
-                                </div>
-                                <div class="form-group">
-                                    <label for="contrato-dia-pago">Día de Pago</label>
-                                    <input type="number" id="contrato-dia-pago" min="1" max="31" value="5">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="contrato-fecha-inicio">Fecha de Inicio</label>
-                                    <input type="date" id="contrato-fecha-inicio" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="contrato-fecha-vencimiento">Fecha de Vencimiento</label>
-                                    <input type="date" id="contrato-fecha-vencimiento" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="contrato-condiciones">Condiciones</label>
-                                <textarea id="contrato-condiciones" class="form-textarea" rows="3" maxlength="500" required></textarea>
-                            </div>
-                            <div id="contrato-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-contrato" class="btn btn-primary btn-lg">
-                                    Registrar Contrato
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- REPORTES -->
+        <section id="view-reportes" class="view hidden">
+            <div class="page-header"><h1>Reportes</h1></div>
+            <div id="reporte-cxc-metrics" class="metrics-grid"></div>
+            <div class="dashboard-grid"><div class="card"><div class="card-header"><h3>Ingresos mensuales</h3></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>Mes</th><th>Ingresos</th><th>Facturas</th></tr></thead><tbody id="reporte-ingresos-body"></tbody></table></div></div><div class="card"><div class="card-header"><h3>Facturación por cliente</h3></div><div class="card-body table-responsive"><table class="table"><thead><tr><th>Cliente</th><th>Documento</th><th>Facturado</th><th>Facturas</th></tr></thead><tbody id="reporte-clientes-body"></tbody></table></div></div></div>
+        </section>
 
-            <section id="view-gastos" class="view hidden">
-                <div class="page-header">
-                    <h1>Registro de Gastos</h1>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="gasto-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="gasto-factura">Factura</label>
-                                    <select id="gasto-factura" required>
-                                        <option value="">Seleccione una factura...</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gasto-monto">Monto (RD$)</label>
-                                    <input type="number" id="gasto-monto" min="0.01" step="0.01" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="gasto-fecha-vencimiento">Fecha de Vencimiento</label>
-                                    <input type="date" id="gasto-fecha-vencimiento" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gasto-categoria">Categoría</label>
-                                    <select id="gasto-categoria" required>
-                                        <option value="">Seleccione una categoría...</option>
-                                        <option value="Incentivos">Incentivos</option>
-                                        <option value="Operativos">Operativos</option>
-                                        <option value="Salarios">Salarios</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="gasto-evidencia">Evidencia (archivo)</label>
-                                <input type="file" id="gasto-evidencia" accept=".pdf,.jpg,.png">
-                            </div>
-                            <div id="gasto-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-gasto" class="btn btn-primary btn-lg">
-                                    Registrar Gasto
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- USUARIOS -->
+        <section id="view-usuarios" class="view hidden"><div class="page-header"><h1>Usuarios</h1><button id="btn-nuevo-usuario" data-permission="USUARIOS.GESTIONAR" class="btn btn-primary">+ Usuario</button></div><div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Creación</th><th>Acciones</th></tr></thead><tbody id="usuarios-body"></tbody></table></div></div></section>
+        <section id="view-usuario-form" class="view hidden"><div class="page-header"><h1>Usuario</h1><button id="btn-volver-usuarios" class="btn btn-secondary">← Volver</button></div><div class="card form-card"><div class="card-body"><form id="usuario-form"><input type="hidden" id="usuario-id"><div class="form-row"><div class="form-group"><label>Nombre *</label><input id="usuario-nombre" required></div><div class="form-group"><label>Correo *</label><input type="email" id="usuario-email" required></div></div><div class="form-row"><div class="form-group"><label>Rol *</label><select id="usuario-rol" required></select></div><div class="form-group"><label>Contraseña</label><input type="password" id="usuario-password" minlength="8"></div></div><div id="usuario-error" class="form-error hidden"></div><button id="btn-enviar-usuario" class="btn btn-primary" type="submit">Guardar</button></form></div></div></section>
 
-            <section id="view-acuerdos-pago" class="view hidden">
-                <div class="page-header">
-                    <h1>Acuerdos de Pago</h1>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table" id="acuerdos-table">
-                                <thead>
-                                    <tr>
-                                        <th>Factura</th>
-                                        <th>Cliente</th>
-                                        <th>Monto Original</th>
-                                        <th>Cuotas</th>
-                                        <th>Monto por Cuota</th>
-                                        <th>Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="acuerdos-body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section id="view-reportes" class="view hidden">
-                <div class="page-header">
-                    <h1>Reportes</h1>
-                </div>
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Ingresos Mensuales</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="reporte-ingresos-table-container">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Mes</th>
-                                            <th>Ingresos</th>
-                                            <th>Facturas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="reporte-ingresos-body"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Facturación por Cliente</h3>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Cliente</th>
-                                        <th>RNC</th>
-                                        <th>Total</th>
-                                        <th>Facturas</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="reporte-clientes-body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Estado de Cuentas por Cobrar/Pagar</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="metrics-grid" id="reporte-cxc-metrics"></div>
-                    </div>
-                </div>
-            </section>
+        <!-- ROLES Y PERMISOS -->
+        <section id="view-roles" class="view hidden">
+            <div class="page-header"><h1>Roles y permisos</h1><button id="btn-nuevo-rol" data-permission="ROLES.GESTIONAR" class="btn btn-primary">+ Nuevo rol</button></div>
+            <div id="roles-feedback" class="form-success hidden" role="status"></div>
+            <div id="roles-summary" class="security-summary-grid"></div>
+            <div class="card"><div class="card-header flex-between"><h3>Matriz de acceso</h3><span class="security-caption">RBAC · Control de acceso basado en roles</span></div><div class="card-body table-responsive"><table class="table roles-table"><thead><tr><th>Rol</th><th>Usuarios</th><th>Permisos asignados</th><th>Tipo</th><th>Acciones</th></tr></thead><tbody id="roles-body"></tbody></table></div></div>
+        </section>
+        <section id="view-rol-form" class="view hidden">
+            <div class="page-header"><h1 id="rol-form-title">Nuevo rol</h1><button id="btn-volver-roles" class="btn btn-secondary">← Volver</button></div>
+            <div class="card form-card role-editor-card"><div class="card-body"><form id="rol-form"><input type="hidden" id="rol-id"><div class="form-group role-name-field"><label>Nombre del rol *</label><input id="rol-nombre" maxlength="50" required placeholder="Ej.: Supervisor de cobros"></div><div class="permission-toolbar"><div><strong>Permisos del rol</strong><span id="rol-permission-count">0 seleccionados</span></div><div class="permission-toolbar-actions"><button id="btn-marcar-todos" type="button" class="btn btn-sm btn-secondary">Marcar todos</button><button id="btn-limpiar-permisos" type="button" class="btn btn-sm btn-secondary">Limpiar</button></div></div><div id="permisos-matrix" class="permissions-matrix"></div><div id="rol-error" class="form-error hidden"></div><div class="form-actions role-actions"><button id="btn-enviar-rol" class="btn btn-primary" type="submit">Guardar rol</button></div></form></div></div>
+        </section>
 
-            <section id="view-usuarios" class="view hidden">
-                <div class="page-header">
-                    <h1>Gestión de Usuarios</h1>
-                    <button id="btn-nuevo-usuario" class="btn btn-primary">+ Nuevo Usuario</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table" id="usuarios-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Rol</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Creación</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usuarios-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <!-- ACCESO DENEGADO -->
+        <section id="view-access-denied" class="view hidden">
+            <div class="access-denied-card"><div class="access-denied-icon">!</div><h1>Acceso restringido</h1><p id="access-denied-message">Tu rol no tiene permisos para abrir este módulo.</p><button id="btn-access-home" class="btn btn-primary">Ir a mi inicio</button></div>
+        </section>
 
-            <section id="view-usuario-form" class="view hidden">
-                <div class="page-header">
-                    <h1 id="usuario-form-title">Nuevo Usuario</h1>
-                    <button id="btn-volver-usuarios" class="btn btn-secondary">← Volver</button>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="usuario-form">
-                            <input type="hidden" id="usuario-id">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="usuario-nombre">Nombre Completo</label>
-                                    <input type="text" id="usuario-nombre" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="usuario-email">Correo Electrónico</label>
-                                    <input type="email" id="usuario-email" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="usuario-password">Contraseña</label>
-                                    <div class="password-wrapper">
-                                        <input type="password" id="usuario-password" minlength="6">
-                                        <button type="button" class="btn-toggle-password" tabindex="-1" data-toggle-password>👁️</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="usuario-rol">Rol</label>
-                                    <select id="usuario-rol" required>
-                                        <option value="">Seleccione un rol...</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="usuario-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-usuario" class="btn btn-primary btn-lg">
-                                    Guardar Usuario
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- PERFIL -->
+        <section id="view-perfil" class="view hidden"><div class="page-header"><h1>Mi perfil</h1></div><div class="dashboard-grid"><div class="card"><div class="card-header"><h3>Datos personales</h3></div><div class="card-body"><form id="perfil-form"><div class="form-group"><label>Nombre</label><input id="perfil-nombre" required></div><div class="form-group"><label>Correo</label><input type="email" id="perfil-email" required></div><div id="perfil-error" class="form-error hidden"></div><div class="form-actions"><button id="btn-enviar-perfil" class="btn btn-primary">Actualizar perfil</button></div></form></div></div><div class="card"><div class="card-header"><h3>Cambiar contraseña</h3></div><div class="card-body"><form id="password-form"><div class="form-group"><label>Contraseña actual</label><input type="password" id="pass-actual" required></div><div class="form-group"><label>Nueva contraseña</label><input type="password" id="pass-nueva" minlength="8" required></div><div id="password-error" class="form-error hidden"></div><div id="password-success" class="success-message hidden"></div><div class="form-actions"><button id="btn-enviar-password" class="btn btn-primary">Cambiar contraseña</button></div></form></div></div></div></section>
 
-            <section id="view-perfil" class="view hidden">
-                <div class="page-header">
-                    <h1>Mi Perfil</h1>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <form id="perfil-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="perfil-nombre">Nombre Completo</label>
-                                    <input type="text" id="perfil-nombre" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="perfil-email">Correo Electrónico</label>
-                                    <input type="email" id="perfil-email" required>
-                                </div>
-                            </div>
-                            <div id="perfil-error" class="form-error hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-perfil" class="btn btn-primary btn-lg">
-                                    Actualizar Perfil
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Cambiar Contraseña</h3>
-                    </div>
-                    <div class="card-body">
-                        <form id="password-form">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="pass-actual">Contraseña Actual</label>
-                                    <div class="password-wrapper">
-                                        <input type="password" id="pass-actual" required>
-                                        <button type="button" class="btn-toggle-password" tabindex="-1" data-toggle-password>👁️</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pass-nueva">Nueva Contraseña</label>
-                                    <div class="password-wrapper">
-                                        <input type="password" id="pass-nueva" minlength="6" required>
-                                        <button type="button" class="btn-toggle-password" tabindex="-1" data-toggle-password>👁️</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="password-error" class="form-error hidden"></div>
-                            <div id="password-success" class="form-success hidden"></div>
-                            <div class="form-actions">
-                                <button type="submit" id="btn-enviar-password" class="btn btn-primary btn-lg">
-                                    Cambiar Contraseña
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
+        <!-- AUDITORÍA -->
+        <section id="view-auditoria" class="view hidden"><div class="page-header"><h1>Auditoría</h1></div><div class="card"><div class="card-body table-responsive"><table class="table"><thead><tr><th>ID</th><th>Usuario</th><th>Correo</th><th>Acción</th><th>Módulo</th><th>Registro</th><th>Detalle</th><th>Fecha</th></tr></thead><tbody id="auditoria-body"></tbody></table><div class="pagination"><button id="btn-prev-page" class="btn btn-secondary btn-sm">Anterior</button><span id="page-info">Página 1</span><button id="btn-next-page" class="btn btn-secondary btn-sm">Siguiente</button></div></div></div></section>
+    </main>
+</div>
 
-            <section id="view-auditoria" class="view hidden">
-                <div class="page-header">
-                    <h1>Auditoría del Sistema</h1>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table" id="auditoria-table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Usuario</th>
-                                        <th>Email</th>
-                                        <th>Acción</th>
-                                        <th>Módulo</th>
-                                        <th>ID Registro</th>
-                                        <th>Detalle</th>
-                                        <th>Fecha</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="auditoria-body"></tbody>
-                            </table>
-                        </div>
-                        <div class="pagination" id="auditoria-pagination">
-                            <button id="btn-prev-page" class="btn btn-secondary" disabled>← Anterior</button>
-                            <span id="page-info" class="page-info">Página 1</span>
-                            <button id="btn-next-page" class="btn btn-secondary">Siguiente →</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+
+<div id="lote-facturas-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="lote-facturas-title">
+    <div class="modal-backdrop" data-close-lote-modal></div>
+    <div class="modal-panel modal-panel-small">
+        <div class="modal-header"><h2 id="lote-facturas-title">Generar facturas del mes</h2><button id="btn-cerrar-lote-modal" class="modal-close" type="button" aria-label="Cerrar">×</button></div>
+        <div class="payment-modal-body">
+            <div class="form-group"><label>Período *</label><input type="month" id="lote-periodo" required></div>
+            <div class="form-row"><div class="form-group"><label>Tipo de factura *</label><select id="lote-tipo" required><option value="CONTADO">Al contado</option><option value="CREDITO">A crédito</option></select></div><div id="lote-cuotas-group" class="form-group hidden"><label>Cantidad de cuotas *</label><input type="number" id="lote-cuotas" min="2" max="24" value="3"></div></div>
+            <div id="lote-regla" class="payment-rule payment-rule-cash"><strong>Al contado:</strong> se generará un único saldo exigible por cada contrato.</div>
+            <div id="lote-error" class="form-error hidden"></div>
+        </div>
+        <div class="modal-actions"><button id="btn-cancelar-lote" class="btn btn-secondary" type="button">Cancelar</button><button id="btn-confirmar-lote" class="btn btn-primary" type="button">Generar facturas</button></div>
     </div>
+</div>
 
-    <script src="js/api.js"></script>
-    <script src="js/router.js"></script>
-    <script src="js/login.js"></script>
-    <script src="js/dashboard.js"></script>
-    <script src="js/facturas.js"></script>
-    <script src="js/clientes.js"></script>
-    <script src="js/movimientos.js"></script>
-    <script src="js/contratos.js"></script>
-    <script src="js/gastos.js"></script>
-    <script src="js/acuerdos.js"></script>
-    <script src="js/reportes.js"></script>
-    <script src="js/auditoria.js"></script>
-    <script src="js/propiedades.js"></script>
-    <script src="js/unidades.js"></script>
-    <script src="js/usuarios.js"></script>
-    <script src="js/perfil.js"></script>
-    <script src="js/alertas.js"></script>
-    <script src="js/app.js"></script>
+<div id="pago-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="pago-modal-title">
+    <div class="modal-backdrop" data-close-pago-modal></div>
+    <div class="modal-panel payment-modal-panel">
+        <div class="modal-header"><div><span class="eyebrow">Aplicar cobro</span><h2 id="pago-modal-title">Registrar pago</h2></div><button id="btn-cerrar-pago-modal" class="modal-close" type="button" aria-label="Cerrar">×</button></div>
+        <form id="pago-form">
+            <div class="payment-modal-body">
+                <input type="hidden" id="pago-factura-id">
+                <div class="payment-summary-grid">
+                    <div><span>Factura</span><strong id="pago-factura-numero">—</strong></div>
+                    <div><span>Inquilino</span><strong id="pago-inquilino">—</strong></div>
+                    <div><span>Tipo de factura</span><strong id="pago-tipo-factura">—</strong></div>
+                    <div><span>Plan</span><strong id="pago-plan-cuotas">—</strong></div>
+                    <div><span>Total facturado</span><strong id="pago-total">RD$0.00</strong></div>
+                    <div><span>Pagado hasta ahora</span><strong id="pago-pagado">RD$0.00</strong></div>
+                    <div class="payment-summary-pending"><span>Saldo pendiente</span><strong id="pago-pendiente">RD$0.00</strong></div>
+                </div>
+                <div id="pago-regla" class="payment-rule"></div>
+                <div id="pago-cuotas-section" class="payment-installments hidden"><div class="payment-installments-title">Plan de cuotas</div><div class="table-responsive"><table class="table compact-table"><thead><tr><th>#</th><th>Vencimiento</th><th>Monto</th><th>Pagado</th><th>Pendiente</th><th>Estado</th></tr></thead><tbody id="pago-cuotas-body"></tbody></table></div></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Monto recibido (RD$) *</label><input type="number" id="pago-monto" min="0.01" step="0.01" required></div>
+                    <div class="form-group"><label>Fecha del pago *</label><input type="date" id="pago-fecha" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Método de pago *</label><select id="pago-metodo" required><option>Transferencia</option><option>Efectivo</option><option>Cheque</option><option>Tarjeta</option><option>Depósito bancario</option></select></div>
+                    <div class="form-group"><label>Referencia / comprobante</label><input id="pago-referencia" maxlength="100" placeholder="Ej.: TRX-0001"></div>
+                </div>
+                <div id="pago-nuevo-saldo" class="inline-summary payment-balance-preview">Nuevo saldo después del pago: <strong>RD$0.00</strong></div>
+                <div id="pago-error" class="form-error hidden"></div>
+            </div>
+            <div class="modal-actions"><button id="btn-cancelar-pago" class="btn btn-secondary" type="button">Cancelar</button><button id="btn-guardar-pago" class="btn btn-success" type="submit">Registrar pago</button></div>
+        </form>
+    </div>
+</div>
+
+<div id="acuerdo-pago-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="acuerdo-pago-modal-title">
+    <div class="modal-backdrop" data-close-acuerdo-pago-modal></div>
+    <div class="modal-panel modal-panel-small">
+        <div class="modal-header"><h2 id="acuerdo-pago-modal-title">Pagar cuota</h2><button id="btn-cerrar-acuerdo-pago-modal" class="modal-close" type="button" aria-label="Cerrar">×</button></div>
+        <form id="acuerdo-pago-form">
+            <div class="payment-modal-body">
+                <input type="hidden" id="acuerdo-pago-cuota-id">
+                <div class="payment-summary-grid"><div><span>Cuota</span><strong id="acuerdo-pago-cuota-numero">—</strong></div><div><span>Saldo de la cuota</span><strong id="acuerdo-pago-saldo">RD$0.00</strong></div></div>
+                <div class="form-row"><div class="form-group"><label>Monto a pagar *</label><input type="number" id="acuerdo-pago-monto" min="0.01" step="0.01" required></div><div class="form-group"><label>Método *</label><select id="acuerdo-pago-metodo" required><option>Transferencia</option><option>Efectivo</option><option>Cheque</option><option>Tarjeta</option><option>Depósito bancario</option></select></div></div>
+                <div class="form-group"><label>Referencia / comprobante</label><input id="acuerdo-pago-referencia" maxlength="100"></div>
+                <div id="acuerdo-pago-error" class="form-error hidden"></div>
+            </div>
+            <div class="modal-actions"><button id="btn-cancelar-acuerdo-pago" class="btn btn-secondary" type="button">Cancelar</button><button id="btn-guardar-acuerdo-pago" class="btn btn-success" type="submit">Registrar pago</button></div>
+        </form>
+    </div>
+</div>
+
+<div id="factura-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="factura-modal-title">
+    <div class="modal-backdrop" data-close-factura-modal></div>
+    <div class="modal-panel invoice-modal-panel">
+        <div class="modal-header"><div><span class="eyebrow">Comprobante de arrendamiento</span><h2 id="factura-modal-title">Factura</h2></div><button id="btn-cerrar-factura-modal" class="modal-close" type="button" aria-label="Cerrar">×</button></div>
+        <div id="factura-modal-content" class="invoice-document"></div>
+        <div class="modal-actions"><button id="btn-imprimir-factura" class="btn btn-secondary" type="button">Imprimir</button><button id="btn-cerrar-factura-modal-2" class="btn btn-primary" type="button">Cerrar</button></div>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/router.js"></script>
+<script src="js/login.js"></script>
+<script src="js/dashboard.js?v=20260811-final"></script>
+<script src="js/clientes.js"></script>
+<script src="js/propiedades.js"></script>
+<script src="js/unidades.js"></script>
+<script src="js/contratos.js"></script>
+<script src="js/facturas.js?v=20260811-final"></script>
+<script src="js/depositos.js"></script>
+<script src="js/acuerdos.js?v=20260811-final"></script>
+<script src="js/movimientos.js"></script>
+<script src="js/gastos.js"></script>
+<script src="js/reportes.js"></script>
+<script src="js/usuarios.js"></script>
+<script src="js/roles.js?v=20260811-rbacfix"></script>
+<script src="js/perfil.js"></script>
+<script src="js/auditoria.js"></script>
+<script src="js/alertas.js"></script>
+<script src="js/app.js?v=20260811-rbacfix"></script>
 </body>
 </html>

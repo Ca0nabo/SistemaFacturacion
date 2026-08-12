@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SistemaFacturacion.Data;
 using SistemaFacturacion.DTOs.Alertas;
 
+using SistemaFacturacion.Security;
+
 namespace SistemaFacturacion.Controllers;
 
 [ApiController]
@@ -19,6 +21,7 @@ public class AlertasController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = Permissions.AlertasVer)]
     public async Task<IActionResult> GetAlertas([FromQuery] int dias = 7)
     {
         var hoy = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -72,6 +75,7 @@ public class AlertasController : ControllerBase
     }
 
     [HttpGet("contador")]
+    [Authorize(Policy = Permissions.AlertasVer)]
     public async Task<IActionResult> GetContador()
     {
         var hoy = DateOnly.FromDateTime(DateTime.UtcNow);

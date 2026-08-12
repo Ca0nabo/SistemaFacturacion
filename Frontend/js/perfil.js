@@ -43,12 +43,15 @@ function initPerfilForm() {
             const user = getUser();
             if (user) {
                 setAuth(result.token, {
+                    ...user,
                     id: result.idUsuario,
                     email: result.email,
                     nombre: result.nombreCompleto,
-                    rol: result.rol
+                    rol: result.rol,
+                    permisos: result.permisos ?? user.permisos ?? []
                 });
-                document.getElementById('user-info').textContent = result.nombreCompleto + ' - ' + result.rol;
+                updateUserChrome();
+                applyPermissionVisibility();
             }
             errorDiv.classList.add('hidden');
             alert('Perfil actualizado exitosamente.');
